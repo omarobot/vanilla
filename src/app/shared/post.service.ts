@@ -1,0 +1,53 @@
+import { Injectable } from "@angular/core";
+import { Post } from "./post";
+import {
+  AngularFireDatabase,
+  AngularFireList,
+  AngularFireObject,
+} from "@angular/fire/database";
+
+@Injectable({
+  providedIn: "root",
+})
+export class PostService {
+  postListRef: AngularFireList<any>;
+  postRef: AngularFireObject<any>;
+
+  constructor(private db: AngularFireDatabase) {}
+
+  // Create
+  createPost(post: Post) {
+    return this.postListRef.push({
+      author: post.author,
+      title: post.title,
+      content: post.content,
+    });
+  }
+
+  // Get Single
+  getPost(id: string) {
+    this.postRef = this.db.object("/post/" + id);
+    return this.postRef;
+  }
+
+  // Get List
+  getPostList() {
+    this.postListRef = this.db.list("/post");
+    return this.postListRef;
+  }
+
+  // Update
+  updatePost(id, post: Post) {
+    return this.postRef.update({
+      author: post.author,
+      title: post.title,
+      content: post.content,
+    });
+  }
+
+  // Delete
+  deletePost(id: string) {
+    this.postRef = this.db.object("/post/" + id);
+    this.postRef.remove();
+  }
+}
