@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
-import { Post } from "../shared/post";
-import { PostService } from "../shared/post.service";
+import { Post } from "../../shared/post";
+import { PostService } from "../../shared/post.service";
 
 @Component({
   selector: "app-tab1",

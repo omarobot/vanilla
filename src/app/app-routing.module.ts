@@ -2,29 +2,45 @@ import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 
 const routes: Routes = [
-  { path: "", redirectTo: "", pathMatch: "full" },
+  { path: "", redirectTo: "login", pathMatch: "full" },
+  // {
+  //   path: "",
+  //   loadChildren: () =>
+  //     import("./login/login.module").then((m) => m.LoginPageModule),
+  // },
+  // {
+  //   path: "add-post",
+  //   loadChildren: () =>
+  //     import("./core/tab3/add-post/add-post.module").then(
+  //       (m) => m.AddPostPageModule
+  //     ),
+  // },
+  // {
+  //   path: "edit-post",
+  //   loadChildren: () =>
+  //     import("./core/tab1/edit-post/edit-post.module").then(
+  //       (m) => m.EditPostPageModule
+  //     ),
+  // },
+  // {
+  //   path: "tab5",
+  //   loadChildren: () =>
+  //     import("./core/tab5/tab5.module").then((m) => m.Tab5PageModule),
+  // },
   {
-    path: "",
+    path: "login",
     loadChildren: () =>
-      import("./tabs/tabs.module").then((m) => m.TabsPageModule),
+      import("./login/login.module").then((m) => m.LoginPageModule),
   },
   {
-    path: "add-post",
+    path: "home",
     loadChildren: () =>
-      import("./tab3/add-post/add-post.module").then(
-        (m) => m.AddPostPageModule
-      ),
+      import("./home/home.module").then((m) => m.TabsPageModule),
   },
   {
-    path: "edit-post",
+    path: "register",
     loadChildren: () =>
-      import("./tab1/edit-post/edit-post.module").then(
-        (m) => m.EditPostPageModule
-      ),
-  },
-  {
-    path: 'tab5',
-    loadChildren: () => import('./tab5/tab5.module').then( m => m.Tab5PageModule)
+      import("./register/register.module").then((m) => m.RegisterPageModule),
   },
 ];
 @NgModule({
