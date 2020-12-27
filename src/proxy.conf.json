@@ -1,6 +1,6 @@
   {
     "/api/*": {
-      "target": "https://us-central1-vanilla-2ca78.cloudfunctions.net",
+      "target": "http://localhost:5001/vanilla-2ca78/us-central1",
       "secure": false,
       "changeOrigin": true,
       "logLevel": "debug"

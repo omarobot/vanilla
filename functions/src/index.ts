@@ -106,7 +106,7 @@ app.put("/users/:userId", async (req, res) => {
     .catch((error) => res.status(500).send(error));
 });
 
-app.get("/name", (req: any, res: any) => res.json({ username: "papi" }));
+app.get("/name", (req: any, res: any) => res.json({ username: "papi chulo" }));
 
 app.get("/first", (req: any, res: any) => res.json({ username: "omar" }));
 
