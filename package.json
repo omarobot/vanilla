@@ -1,12 +1,13 @@
 {
   "name": "vanilla-ionic",
   "version": "0.0.1",
-  "author": "Ionic Framework",
+  "author": "Omar Saravia",
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config src/proxy.conf.json",
     "build": "ng build",
+    "build:prod": "ng build --configuration=production --aot --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

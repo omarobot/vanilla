@@ -1,0 +1,8 @@
+  {
+    "/api/*": {
+      "target": "https://us-central1-vanilla-2ca78.cloudfunctions.net",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug"
+      }
+  }

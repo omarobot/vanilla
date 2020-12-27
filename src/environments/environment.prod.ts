@@ -10,4 +10,5 @@ export const environment = {
     appId: "1:146106908889:web:4462ddce93d9e06bbc7ec8",
     measurementId: "G-J4PESFZN9R",
   },
+  apiURL: "https://us-central1-vanilla-2ca78.cloudfunctions.net/api",
 };

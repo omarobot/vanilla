@@ -5,6 +5,8 @@ import {
   AngularFireList,
   AngularFireObject,
 } from "@angular/fire/database";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: "root",
@@ -13,7 +15,21 @@ export class PostService {
   postListRef: AngularFireList<any>;
   postRef: AngularFireObject<any>;
 
-  constructor(private db: AngularFireDatabase) {}
+  res: any;
+
+  BASE_URL = environment.apiURL;
+
+  constructor(private db: AngularFireDatabase, private http: HttpClient) {}
+
+  // getUser() {
+  //   this.http.get('https://us-central1-vanilla-2ca78.cloudfunctions.net/api/name')
+  // }
+
+  getUser() {
+    console.log(this.BASE_URL);
+
+    return this.http.get(this.BASE_URL + "/name");
+  }
 
   // Create
   createPost(post: Post) {
