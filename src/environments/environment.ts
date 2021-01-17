@@ -15,6 +15,10 @@ export const environment = {
     measurementId: "G-J4PESFZN9R",
   },
   apiURL: "/api",
+  appShellConfig: {
+    debug: false,
+    networkDelay: 1000,
+  },
 };
 
 /*

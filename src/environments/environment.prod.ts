@@ -11,4 +11,8 @@ export const environment = {
     measurementId: "G-J4PESFZN9R",
   },
   apiURL: "https://us-central1-vanilla-2ca78.cloudfunctions.net/api",
+  appShellConfig: {
+    debug: false,
+    networkDelay: 500,
+  },
 };
