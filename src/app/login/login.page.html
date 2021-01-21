@@ -12,9 +12,10 @@
   <div class="fullheight xc">
     <div style="padding-top: 25%;">
       <div class="logo-content">
-        <img class="logo" src="../../assets/hum.png">
+        <img class="logo" src="../../assets/logo4.png">
+        <!-- <h6>Amplify your night</h6> -->
       </div>
-      <form [formGroup]="loginForm" (ngSubmit)="doLogin()">
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
         <ion-list class="inputs-list" lines="full">
           <ion-item class="input-item">
             <ion-input type="email" placeholder="Email" formControlName="email" clearInput autocapitalize="off"
@@ -51,7 +52,7 @@
           <ion-button class="forgot-btn" fill="clear" [routerLink]="['/auth/forgot-password']">
             Forgot Password?
           </ion-button>
-          <ion-button class="signup-btn" fill="clear" [routerLink]="['/auth/signup']">
+          <ion-button class="signup-btn" fill="clear" [routerLink]="['/register']">
             Sign Up!
           </ion-button>
         </ion-row>

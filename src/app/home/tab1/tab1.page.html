@@ -1,16 +1,35 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Vanilla
-    </ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+
+      <ion-button>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="presentModal()">
+        <ion-icon name="location-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>Paapi</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list class="ios list-ios hydrated">
+  <app-feed></app-feed>
+</ion-content>
+
+
+
+
+
+<!-- <ion-list class="ios list-ios hydrated">
     <ion-list-header class="ios hydrated">
       Posts
     </ion-list-header>
+
+    
 
     <ion-item *ngFor="let post of posts" class="user-list">
       <ion-label>
@@ -31,4 +50,4 @@
         </button>
       </div>
     </ion-item>
-  </ion-list>
+  </ion-list> -->

@@ -4,10 +4,9 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { IonicModule } from "@ionic/angular";
 
-import { RegisterPageRoutingModule } from "./register-routing.module";
+import { LocationFormPageRoutingModule } from "./location-form-routing.module";
 
-import { RegisterPage } from "./register.page";
-import { ComponentsModule } from "../components/components.module";
+import { LocationFormPage } from "./location-form.page";
 
 @NgModule({
   imports: [
@@ -15,9 +14,8 @@ import { ComponentsModule } from "../components/components.module";
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    RegisterPageRoutingModule,
-    ComponentsModule,
+    LocationFormPageRoutingModule,
   ],
-  declarations: [RegisterPage],
+  declarations: [LocationFormPage],
 })
-export class RegisterPageModule {}
+export class LocationFormPageModule {}

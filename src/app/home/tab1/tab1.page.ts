@@ -1,6 +1,9 @@
 import { Component } from "@angular/core";
+import { FormGroup } from "@angular/forms";
 import { Post } from "../../shared/post";
 import { PostService } from "../../shared/post.service";
+import { ModalController } from "@ionic/angular";
+import { LocationFormPage } from "./location-form/location-form.page";
 
 @Component({
   selector: "app-tab1",
@@ -10,9 +13,13 @@ import { PostService } from "../../shared/post.service";
 export class Tab1Page {
   posts = [];
 
-  constructor(private postService: PostService) {}
+  constructor(
+    private postService: PostService,
+    public modalController: ModalController
+  ) {}
 
   ngOnInit() {
+    this.presentModal();
     this.fetchPosts();
     let postRes = this.postService.getPostList();
     postRes.snapshotChanges().subscribe((res) => {
@@ -23,6 +30,14 @@ export class Tab1Page {
         this.posts.push(a as Post);
       });
     });
+  }
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: LocationFormPage,
+      cssClass: "my-custom-class",
+    });
+    return await modal.present();
   }
 
   fetchPosts() {

@@ -7,6 +7,7 @@ import {
 } from "@angular/fire/database";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -29,6 +30,10 @@ export class PostService {
     console.log(this.BASE_URL);
 
     return this.http.get(this.BASE_URL + "/name");
+  }
+
+  public getJSON(): Observable<any> {
+    return this.http.get("./assets/feed.json");
   }
 
   // Create

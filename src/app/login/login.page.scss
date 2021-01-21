@@ -4,6 +4,7 @@
     --page-margin: var(--app-broad-margin);
     // --page-background: var(--app-background-shade);
     --page-background: var(--app-background);
+    --background: none;
 
 }
 
@@ -19,7 +20,8 @@ ion-content {
 
 // Note:  All the CSS variables defined below are overrides of Ionic elements CSS Custom Properties
 .login-content {
-    --background: var(--page-background);
+    background-color: #237e9a;
+    background-image: linear-gradient(315deg, #517d8c 0%, #c3d2de 74%);
     --padding-start: var(--page-margin);
     --padding-end: var(--page-margin);
     --padding-top: var(--page-margin);
@@ -39,8 +41,8 @@ ion-content {
     }
 
     .logo {
-        max-width: 50%;
-        max-height: 30%;
+        max-width: 75%;
+        max-height: 50%;
     }
 
     .inputs-list {
@@ -76,7 +78,9 @@ ion-content {
         align-items: center;
 
         .forgot-btn {
-            --color: var(--ion-color-medium);
+
+            // --color: var(--ion-color-medium);
+            color: darkslategray;
             margin: 0px;
 
             &:focus {

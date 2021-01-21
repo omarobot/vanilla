@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { MenuController } from "@ionic/angular";
+import { AuthenticationService } from "../shared/authentication.service";
 import { PostService } from "../shared/post.service";
 
 @Component({
@@ -29,7 +30,8 @@ export class LoginPage implements OnInit {
   constructor(
     public router: Router,
     public menu: MenuController,
-    public service: PostService
+    public service: PostService,
+    public authService: AuthenticationService
   ) {
     this.loginForm = new FormGroup({
       email: new FormControl(
@@ -66,9 +68,20 @@ export class LoginPage implements OnInit {
     this.menu.enable(true);
   }
 
-  doLogin(): void {
-    console.log("do Log In");
-    this.router.navigate(["app/categories"]);
+  login(): void {
+    this.authService
+      .signIn(this.loginForm.value.email, this.loginForm.value.password)
+      .then((res) => {
+        if (this.authService.isEmailVerified) {
+          this.router.navigate(["home"]);
+        } else {
+          window.alert("Email is not verified");
+          return false;
+        }
+      })
+      .catch((error) => {
+        window.alert(error.message);
+      });
   }
 
   goToForgotPassword(): void {

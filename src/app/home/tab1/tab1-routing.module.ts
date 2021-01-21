@@ -12,6 +12,10 @@ const routes: Routes = [
     loadChildren: () =>
       import("./edit-post/edit-post.module").then((m) => m.EditPostPageModule),
   },
+  {
+    path: 'location-form',
+    loadChildren: () => import('./location-form/location-form.module').then( m => m.LocationFormPageModule)
+  },
 ];
 
 @NgModule({
