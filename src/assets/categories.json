@@ -1,0 +1,18 @@
+{
+
+    "U5zEC7bWrdhBo0JpXNLn" : {
+        "image" : "https://images.pexels.com/photos/164745/pexels-photo-164745.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+        "name"  : "Clubs",
+        "description" : "Freshly baked for your perfect lunch."
+    },
+    "SFvYrnRpV2MImXdc4yAT" : { 
+        "image" : "https://images.pexels.com/photos/1304475/pexels-photo-1304475.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+        "name"  : "Bars",
+        "description" : "Freshly baked for your perfect lunch."
+    },
+    "NsaweERriHWJYQA16ZVTc" :  {
+        "image" : "https://images.pexels.com/photos/1587927/pexels-photo-1587927.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+        "name"  : "Live Shows",
+        "description" : "Freshly baked for your perfect lunch."
+    }
+}

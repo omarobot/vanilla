@@ -1,21 +1,21 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { TabsPage } from "./home.page";
+import { HomePage } from "./home.page";
 
 const routes: Routes = [
   {
     path: "",
-    component: TabsPage,
+    component: HomePage,
     children: [
       {
         path: "",
-        redirectTo: "tab1",
+        redirectTo: "timeline",
         pathMatch: "full",
       },
       {
-        path: "tab1",
+        path: "timeline",
         loadChildren: () =>
-          import("./tab1/tab1.module").then((m) => m.Tab1PageModule),
+          import("./timeline/timeline.module").then((m) => m.Tab1PageModule),
       },
       {
         path: "tab2",

@@ -36,6 +36,17 @@ export class PostService {
     return this.http.get("./assets/feed.json");
   }
 
+  public getPopular(): Observable<any> {
+    return this.http.get("./assets/popular.json");
+  }
+
+  public getPromotions(): Observable<any> {
+    return this.http.get("./assets/popular.json");
+  }
+
+  public getCategories(): Observable<any> {
+    return this.http.get("./assets/categories.json");
+  }
   // Create
   createPost(post: Post) {
     return this.postListRef.push({
