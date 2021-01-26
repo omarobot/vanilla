@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { HomePage } from "./home.page";
+import { OpenModalGuard } from "./tab3/open-modal.guard";
 
 const routes: Routes = [
   {
@@ -26,6 +27,7 @@ const routes: Routes = [
       },
       {
         path: "tab3",
+        canActivate: [OpenModalGuard],
         loadChildren: () =>
           import("./tab3/tab3.module").then((m) => m.Tab3PageModule),
       },

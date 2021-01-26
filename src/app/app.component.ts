@@ -1,15 +1,20 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 
-import { Platform } from "@ionic/angular";
+import { ModalController, Platform } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { PostModalComponent } from "./home/tab3/post-modal/post-modal.component";
+import { Observable } from "rxjs";
+import { ModalService } from "./shared/services/modal.service";
 
 @Component({
   selector: "app-root",
   templateUrl: "app.component.html",
   styleUrls: ["app.component.scss"],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  display$: Observable<boolean>;
+
   //**************************************//
   //********** UI layout pages **********//
   //*************************************//
@@ -66,9 +71,33 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    public modalController: ModalController,
+    public modalService: ModalService
   ) {
     this.initializeApp();
+  }
+
+  ngOnInit() {
+    this.display$ = this.modalService.watch();
+    this.display$.subscribe((val: any) => {
+      console.log("Modal change..." + val);
+      if (val) {
+        this.presentModal();
+      } else {
+        this.modalController.dismiss({
+          dismissed: true,
+        });
+      }
+    });
+  }
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: PostModalComponent,
+      cssClass: "my-custom-class",
+    });
+    return await modal.present();
   }
 
   initializeApp() {

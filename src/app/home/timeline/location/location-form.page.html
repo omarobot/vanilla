@@ -1,3 +1,18 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        Close
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>Location</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
 <ion-content>
 
   <div class="fullheight xc">
@@ -12,11 +27,11 @@
           </ion-item>
           <div class="error-container">
             <ng-container *ngFor="let validation of validation_messages.email">
-              <!-- <div class="error-message"
-                *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+              <div class="error-message"
+                *ngIf="loginForm.get('city').hasError(validation.type) && (loginForm.get('city').dirty || loginForm.get('city').touched)">
                 <ion-icon name="information-circle-outline"></ion-icon>
                 <span>{{ validation.message }}</span>
-              </div> -->
+              </div>
             </ng-container>
           </div>
         </ion-list>
