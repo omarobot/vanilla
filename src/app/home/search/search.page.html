@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+
+      <ion-button>
+      </ion-button>
+    </ion-buttons>
+    <ion-searchbar></ion-searchbar>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="light">
+        <ion-icon name="options-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-segment value="places" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="places">Places</ion-segment-button>
+      <ion-segment-button value="events">Events</ion-segment-button>
+    </ion-segment>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="options-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content no-padding>
+  <app-places *ngIf="placesView"></app-places>
+  <app-events *ngIf="eventsView"></app-events>
+</ion-content>

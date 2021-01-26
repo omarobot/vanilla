@@ -11,4 +11,4 @@ import { FeedPage } from "./feed/feed.page";
   imports: [IonicModule, CommonModule, FormsModule, TimelinePageRoutingModule],
   declarations: [TimelinePage, FeedPage],
 })
-export class Tab1PageModule {}
+export class TimelinePageModule {}

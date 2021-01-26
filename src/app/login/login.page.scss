@@ -2,10 +2,9 @@
 // Note:  These ones were added by us and have nothing to do with Ionic CSS Custom Properties
 :host {
     --page-margin: var(--app-broad-margin);
-    // --page-background: var(--app-background-shade);
-    --page-background: var(--app-background);
-    --background: none;
-
+    --page-background: var(--app-background-shade);
+    --login-background: var(--app-background);
+    // --page-background: var(--app-background);
 }
 
 ion-content {
@@ -20,8 +19,7 @@ ion-content {
 
 // Note:  All the CSS variables defined below are overrides of Ionic elements CSS Custom Properties
 .login-content {
-    background-color: #237e9a;
-    background-image: linear-gradient(315deg, #517d8c 0%, #c3d2de 74%);
+    --background: var(--page-background);
     --padding-start: var(--page-margin);
     --padding-end: var(--page-margin);
     --padding-top: var(--page-margin);
@@ -46,7 +44,7 @@ ion-content {
     }
 
     .inputs-list {
-        --ion-item-background: var(--page-background);
+        --ion-item-background: var(--login-background);
 
         .input-item {
             --padding-start: 0px;
@@ -80,7 +78,7 @@ ion-content {
         .forgot-btn {
 
             // --color: var(--ion-color-medium);
-            color: darkslategray;
+            color: white;
             margin: 0px;
 
             &:focus {

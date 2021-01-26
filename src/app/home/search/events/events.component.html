@@ -1,0 +1,48 @@
+  <ion-grid fixed class="ion-no-padding">
+    <!-- This is HTML code -> class="pins" and class="pin" is required -->
+    <!-- imageUrlArray will contain the URL source of images -->
+    <!-- example: imageUrlArray = ['path/to/imageurl-1', 'path/to/imageurl-2', etc...] -->
+    <!-- CSS file -> https://gist.github.com/AnkitMaheshwariIn/143f8d50902da7efdc1761a198bdbf7d -->
+
+
+
+    <!-- 2 columns -->
+
+    <!-- <div class="pins">
+          <ion-card class="pin" *ngFor="let post of posts">
+            <img [src]="post.image" />
+            <div *ngIf="post.description" class="post-description">
+              <small>{{ post.description }}</small>
+            </div>
+            <ion-item>
+              <ion-avatar item-start>
+                <img src="assets/img/avatar/marty-avatar.png">
+              </ion-avatar>
+              <small>McFly</small>
+              <p><small>Category</small></p>
+            </ion-item>
+          </ion-card>
+        </div> -->
+
+
+    <!-- Responsive layout -->
+
+    <div class="pins2">
+      <ion-card class="pin2" *ngFor="let event of imageUrlArray">
+        <img [src]="event.image">
+        <!-- <ion-card-content>   </ion-card-content> -->
+        <!-- <ion-list lines="none">
+                <ion-item>
+                  <ion-avatar slot="start">
+                    <img src="https://ionic-docs-demo.herokuapp.com/assets/card-coworker-avatar.png"/>
+                  </ion-avatar>
+                  <ion-label>
+                    <h1>John Parks</h1>
+                    <p>Co-worker</p>
+                  </ion-label>
+                </ion-item>
+              </ion-list> -->
+
+      </ion-card>
+    </div>
+  </ion-grid>

@@ -1,15 +1,13 @@
 import { Component, OnInit } from "@angular/core";
-import { Observable } from "rxjs/internal/Observable";
 import { HideHeaderConfig } from "src/app/shared/hide-header/hide-header.directive";
-import { Post } from "src/app/shared/post";
 import { PostService } from "src/app/shared/post.service";
 
 @Component({
-  selector: "app-tab2",
-  templateUrl: "tab2.page.html",
-  styleUrls: ["tab2.page.scss"],
+  selector: "app-places",
+  templateUrl: "./places.component.html",
+  styleUrls: ["./places.component.scss"],
 })
-export class Tab2Page implements OnInit {
+export class PlacesComponent implements OnInit {
   footerScrollConfig: HideHeaderConfig = {
     cssProperty: "margin-bottom",
     maxValue: undefined,
@@ -54,7 +52,7 @@ export class Tab2Page implements OnInit {
     // this.populars = this.foodService.getPopularItems();
     this.postService.getPopular().subscribe(
       (data: any) => {
-        console.log(data);
+        // console.log(data);
         let keys = Object.keys(data);
         let array = [];
         keys.forEach((key) => {
@@ -72,7 +70,7 @@ export class Tab2Page implements OnInit {
     // this.categories = this.foodService.getCategories();
     this.postService.getCategories().subscribe(
       (data: any) => {
-        console.log(data);
+        // console.log(data);
         let keys = Object.keys(data);
         let array = [];
         keys.forEach((key) => {
@@ -90,7 +88,7 @@ export class Tab2Page implements OnInit {
   getPromotion() {
     this.postService.getPopular().subscribe(
       (data: any) => {
-        console.log(data);
+        // console.log(data);
         let keys = Object.keys(data);
         let array = [];
         keys.forEach((key) => {

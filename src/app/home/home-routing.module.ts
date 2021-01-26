@@ -15,12 +15,14 @@ const routes: Routes = [
       {
         path: "timeline",
         loadChildren: () =>
-          import("./timeline/timeline.module").then((m) => m.Tab1PageModule),
+          import("./timeline/timeline.module").then(
+            (m) => m.TimelinePageModule
+          ),
       },
       {
-        path: "tab2",
+        path: "search",
         loadChildren: () =>
-          import("./tab2/tab2.module").then((m) => m.Tab2PageModule),
+          import("./search/search.module").then((m) => m.SearchPageModule),
       },
       {
         path: "tab3",

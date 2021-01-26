@@ -19,6 +19,7 @@ import { HttpClientModule } from "@angular/common/http";
 
 // environment
 import { environment } from "../environments/environment";
+import { ComponentsModule } from "./components/components.module";
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +33,7 @@ import { environment } from "../environments/environment";
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     HttpClientModule,
+    ComponentsModule,
   ],
   providers: [
     StatusBar,

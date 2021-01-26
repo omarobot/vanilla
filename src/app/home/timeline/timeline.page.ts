@@ -6,7 +6,7 @@ import { ModalController } from "@ionic/angular";
 import { LocationFormPage } from "./location/location-form.page";
 
 @Component({
-  selector: "app-tab1",
+  selector: "app-timeline",
   templateUrl: "timeline.page.html",
   styleUrls: ["timeline.page.scss"],
 })

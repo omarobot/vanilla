@@ -20,9 +20,9 @@
   --ion-color-secondary-tint: #ff1a72;
 
   /** tertiary **/
-  --ion-color-tertiary: #00AFFF;
+  --ion-color-tertiary: #7832fa;
   --ion-color-tertiary-rgb: 0, 175, 255;
-  --ion-color-tertiary-contrast: #000000;
+  --ion-color-tertiary-contrast: #ffffff;
   --ion-color-tertiary-contrast-rgb: 0, 0, 0;
   --ion-color-tertiary-shade: #009ae0;
   --ion-color-tertiary-tint: #1ab7ff;
@@ -94,8 +94,8 @@
   /* Set the font family of the entire app */
   --ion-font-family: 'Rubik', sans-serif;
 
-  --app-background: #FFFFFF;
-  --app-background-shade: var(--ion-background-color-step-50, #F2F2F2);
+  --app-background: #ffffff;
+  --app-background-shade: var(--ion-background-color-step-50, #1a2328);
   --app-background-alt: var(--ion-color-primary);
   --app-background-alt-shade: var(--ion-color-primary-shade);
 
