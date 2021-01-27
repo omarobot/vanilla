@@ -1,9 +1,221 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Interactions</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+
+      <ion-button>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="presentModal()">
+        <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+        <ion-badge color="secondary">2</ion-badge>
+
+      </ion-button>
+    </ion-buttons>
+
+
+    <ion-title>Los Angeles</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-list>
+    <ion-list-header>
+      Notifications
+    </ion-list-header>
 
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://ionicframework.com/docs/demos/api/list/avatar-luke.png">
+      </ion-avatar>
+      <ion-label>
+        <ion-text color="tertiary">
+          <h3>Tony Stark</h3>
+        </ion-text>
+        <p>Wants to be your friend</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://ionicframework.com/docs/demos/api/list/avatar-finn.png">
+      </ion-avatar>
+      <ion-label>
+        <ion-text color="tertiary">
+          <h3>Charles Xavier</h3>
+        </ion-text>
+        <p>Commented on your post</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://ionicframework.com/docs/demos/api/list/avatar-yoda.png">
+      </ion-avatar>
+      <ion-label>
+        <ion-text color="tertiary">
+          <h3>Lex Luther</h3>
+        </ion-text>
+        <p>Requested to follow you</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://ionicframework.com/docs/demos/api/list/avatar-leia.png">
+      </ion-avatar>
+      <ion-label>
+        <ion-text color="tertiary">
+          <h3>Jennifer Lopez</h3>
+        </ion-text>
+        <p>Liked your comment</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://ionicframework.com/docs/demos/api/list/avatar-luke.png">
+      </ion-avatar>
+      <ion-label>
+        <ion-text color="tertiary">
+          <h3>Tony Stark</h3>
+        </ion-text>
+        <p>Wants to be your friend</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://ionicframework.com/docs/demos/api/list/avatar-finn.png">
+      </ion-avatar>
+      <ion-label>
+        <ion-text color="tertiary">
+          <h3>Charles Xavier</h3>
+        </ion-text>
+        <p>Commented on your post</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://ionicframework.com/docs/demos/api/list/avatar-yoda.png">
+      </ion-avatar>
+      <ion-label>
+        <ion-text color="tertiary">
+          <h3>Lex Luther</h3>
+        </ion-text>
+        <p>Requested to follow you</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://ionicframework.com/docs/demos/api/list/avatar-leia.png">
+      </ion-avatar>
+      <ion-label>
+        <ion-text color="tertiary">
+          <h3>Jennifer Lopez</h3>
+        </ion-text>
+        <p>Liked your comment</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://ionicframework.com/docs/demos/api/list/avatar-luke.png">
+      </ion-avatar>
+      <ion-label>
+        <ion-text color="tertiary">
+          <h3>Tony Stark</h3>
+        </ion-text>
+        <p>Wants to be your friend</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://ionicframework.com/docs/demos/api/list/avatar-finn.png">
+      </ion-avatar>
+      <ion-label>
+        <ion-text color="tertiary">
+          <h3>Charles Xavier</h3>
+        </ion-text>
+        <p>Commented on your post</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://ionicframework.com/docs/demos/api/list/avatar-yoda.png">
+      </ion-avatar>
+      <ion-label>
+        <ion-text color="tertiary">
+          <h3>Lex Luther</h3>
+        </ion-text>
+        <p>Requested to follow you</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://ionicframework.com/docs/demos/api/list/avatar-leia.png">
+      </ion-avatar>
+      <ion-label>
+        <ion-text color="tertiary">
+          <h3>Jennifer Lopez</h3>
+        </ion-text>
+        <p>Liked your comment</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://ionicframework.com/docs/demos/api/list/avatar-luke.png">
+      </ion-avatar>
+      <ion-label>
+        <ion-text color="tertiary">
+          <h3>Tony Stark</h3>
+        </ion-text>
+        <p>Wants to be your friend</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://ionicframework.com/docs/demos/api/list/avatar-finn.png">
+      </ion-avatar>
+      <ion-label>
+        <ion-text color="tertiary">
+          <h3>Charles Xavier</h3>
+        </ion-text>
+        <p>Commented on your post</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://ionicframework.com/docs/demos/api/list/avatar-yoda.png">
+      </ion-avatar>
+      <ion-label>
+        <ion-text color="tertiary">
+          <h3>Lex Luther</h3>
+        </ion-text>
+        <p>Requested to follow you</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://ionicframework.com/docs/demos/api/list/avatar-leia.png">
+      </ion-avatar>
+      <ion-label>
+        <ion-text color="tertiary">
+          <h3>Jennifer Lopez</h3>
+        </ion-text>
+        <p>Liked your comment</p>
+      </ion-label>
+    </ion-item>
+
+  </ion-list>
 </ion-content>

@@ -20,8 +20,8 @@ import { HttpClientModule } from "@angular/common/http";
 // environment
 import { environment } from "../environments/environment";
 import { ComponentsModule } from "./components/components.module";
-import { PostModalComponent } from "./home/tab3/post-modal/post-modal.component";
-import { OpenModalGuard } from "./home/tab3/open-modal.guard";
+import { PostModalComponent } from "./home/post/post-modal/post-modal.component";
+import { OpenModalGuard } from "./shared/guards/open-modal.guard";
 
 @NgModule({
   declarations: [AppComponent, PostModalComponent],

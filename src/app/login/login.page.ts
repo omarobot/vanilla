@@ -2,8 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { MenuController } from "@ionic/angular";
-import { AuthenticationService } from "../shared/authentication.service";
-import { PostService } from "../shared/post.service";
+import { AuthenticationService } from "../shared/services/authentication.service";
+import { PostService } from "../shared/services/post.service";
 
 @Component({
   selector: "app-login",

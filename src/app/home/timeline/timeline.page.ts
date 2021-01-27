@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { Post } from "../../shared/post";
-import { PostService } from "../../shared/post.service";
+import { Post } from "../../shared/models/post";
+import { PostService } from "../../shared/services/post.service";
 import { ModalController } from "@ionic/angular";
 import { LocationFormPage } from "./location/location-form.page";
 

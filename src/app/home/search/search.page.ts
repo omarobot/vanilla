@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs/internal/Observable";
 import { HideHeaderConfig } from "src/app/shared/hide-header/hide-header.directive";
-import { Post } from "src/app/shared/post";
-import { PostService } from "src/app/shared/post.service";
+import { Post } from "src/app/shared/models/post";
+import { PostService } from "src/app/shared/services/post.service";
 
 @Component({
   selector: "app-search",

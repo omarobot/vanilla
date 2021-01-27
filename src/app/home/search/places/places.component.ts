@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { HideHeaderConfig } from "src/app/shared/hide-header/hide-header.directive";
-import { PostService } from "src/app/shared/post.service";
+import { PostService } from "src/app/shared/services/post.service";
 
 @Component({
   selector: "app-places",

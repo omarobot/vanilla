@@ -1,0 +1,89 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="close()">
+        Close
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button>
+        Post
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Add Post</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-header style="padding-top: 20px; padding-left: 10px;
+  padding-right: 10px;">
+    <ion-item lines="none">
+      <ion-avatar slot="start">
+        <img src="./assets/saucism.JPG">
+      </ion-avatar>
+      <ion-label>
+        <h3>Saucism</h3>
+        <p>Omar Saravia</p>
+      </ion-label>
+    </ion-item>
+    <br>
+    <ion-textarea style="padding-left: 10px; padding-right: 10px" placeholder="What's good..." rows="5">
+    </ion-textarea>
+
+    <ion-textarea style="padding-left: 10px; padding-right: 10px" placeholder="Add tags" rows="1">
+    </ion-textarea>
+    <p>
+      <ion-chip outline color="secondary">
+        <ion-label>House</ion-label>
+        <ion-icon name="close-circle"></ion-icon>
+      </ion-chip>
+      <ion-chip outline color="secondary">
+        <ion-label>Techno</ion-label>
+        <ion-icon name="close-circle"></ion-icon>
+      </ion-chip>
+      <ion-chip outline color="secondary">
+        <ion-label>Hip Hop</ion-label>
+        <ion-icon name="close-circle"></ion-icon>
+      </ion-chip>
+      <ion-chip outline color="secondary">
+        <ion-label>Rave</ion-label>
+        <ion-icon name="close-circle"></ion-icon>
+      </ion-chip>
+    </p>
+
+
+  </ion-header>
+
+  <!-- <div class="box">
+    <div class="preview">
+      <img [src]="url" alt="">
+    </div>
+    <div class="uploadbtn">
+      <label>
+        <input (change)="uploadImage($event)" type="file" class="image-upload" accept="image/*">
+      </label>
+    </div>
+  </div> -->
+
+</ion-content>
+
+<ion-footer>
+  <ion-tab-bar>
+    <ion-tab-button>
+      <ion-icon name="image-outline" color="primary"></ion-icon>
+      <ion-label>Image</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button>
+      <ion-icon name="film-outline" color="primary"></ion-icon>
+      <ion-label>Video</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button>
+      <ion-icon name="location-outline" color="primary"></ion-icon>
+      <ion-label>Check in</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-footer>

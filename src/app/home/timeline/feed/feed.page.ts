@@ -10,7 +10,7 @@ import { MenuController } from "@ionic/angular";
 import * as firebase from "firebase";
 
 import { Observable } from "rxjs";
-import { PostService } from "src/app/shared/post.service";
+import { PostService } from "src/app/shared/services/post.service";
 @Component({
   selector: "app-feed",
   templateUrl: "./feed.page.html",

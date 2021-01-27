@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
-import { Post } from "./post";
+import { Post } from "../models/post";
 import {
   AngularFireDatabase,
   AngularFireList,
   AngularFireObject,
 } from "@angular/fire/database";
 import { HttpClient } from "@angular/common/http";
-import { environment } from "../../environments/environment";
+import { environment } from "../../../environments/environment";
 import { Observable } from "rxjs";
 
 @Injectable({

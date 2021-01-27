@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { PostService } from "src/app/shared/post.service";
+import { PostService } from "src/app/shared/services/post.service";
 
 @Component({
   selector: "app-edit-post",

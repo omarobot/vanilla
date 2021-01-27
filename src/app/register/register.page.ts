@@ -7,7 +7,7 @@ import {
   ModalController,
 } from "@ionic/angular";
 import { PrivacyPolicyPage } from "../privacy-policy/privacy-policy.page";
-import { AuthenticationService } from "../shared/authentication.service";
+import { AuthenticationService } from "../shared/services/authentication.service";
 import { TermsOfServicePage } from "../terms-of-service/terms-of-service.page";
 import { PasswordValidator } from "../validators/password.validator";
 

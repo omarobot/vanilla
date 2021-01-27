@@ -3,9 +3,10 @@ import { Component, OnInit } from "@angular/core";
 import { ModalController, Platform } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
-import { PostModalComponent } from "./home/tab3/post-modal/post-modal.component";
+import { PostModalComponent } from "./home/post/post-modal/post-modal.component";
 import { Observable } from "rxjs";
 import { ModalService } from "./shared/services/modal.service";
+import { AuthenticationService } from "./shared/services/authentication.service";
 
 @Component({
   selector: "app-root",
@@ -29,11 +30,11 @@ export class AppComponent implements OnInit {
       url: "/app/user",
       ionicIcon: "person-outline",
     },
-    {
-      title: "Contact Card",
-      url: "/contact-card",
-      customIcon: "./assets/custom-icons/side-menu/contact-card.svg",
-    },
+    // {
+    //   title: "Contact Card",
+    //   url: "/contact-card",
+    //   customIcon: "./assets/custom-icons/side-menu/contact-card.svg",
+    // },
     {
       title: "Notifications",
       url: "/app/notifications",
@@ -73,7 +74,8 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     public modalController: ModalController,
-    public modalService: ModalService
+    public modalService: ModalService,
+    public authService: AuthenticationService
   ) {
     this.initializeApp();
   }
