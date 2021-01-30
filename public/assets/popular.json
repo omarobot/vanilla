@@ -1,0 +1,378 @@
+{
+
+    "7A1dYFKxiWJQrv2aO9eV" : {
+      "food_categoryId"   : "U5zEC7bWrdhBo0JpXNLn",
+      "food_category_name":"breakfast",
+      "name" : "The bissel eggs",
+      "description":"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose",
+      "short_description":"Best place to visit.",
+      "image":"https://images.pexels.com/photos/2034851/pexels-photo-2034851.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+      "promotion":false,
+      "recommended":false,
+      "favorite": [],
+      "rating":3,
+      "price": 24,
+      "stock": 300,
+      "attribute1_name": "size",
+      "attribute1_visible": true,
+      "attribute1_value":[ 
+        "small", 
+        "regular",
+        "extra" 
+        ],
+      "attribute2_visible": true,
+      "attribute2_name": "option",
+      "attribute2_value":[
+        {
+            "name":"chilli",
+            "isChecked":true
+        },{
+            "name":"pepper",
+            "isChecked":false
+        },
+        {
+            "name":"garlic",
+            "isChecked":false
+        },{
+            "name":"tomato",
+            "isChecked":false
+        }
+       ]
+    },
+    "zNlW6DsUGtnQF2Jmoir0" : {
+        "food_categoryId"   : "U5zEC7bWrdhBo0JpXNLn",
+        "food_category_name":"breakfast",
+        "name" : "Country breakfast",
+        "description":"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose",
+        "short_description":"Best place to visit.",
+        "image":"https://images.pexels.com/photos/941864/pexels-photo-941864.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+        "promotion":false,
+        "recommended":false,
+        "favorite": [],
+        "rating":3,
+        "price": 24,
+        "stock": 300,
+        "attribute1_name": "size",
+        "attribute1_visible": true,
+        "attribute1_value":[ 
+          "small", 
+          "regular",
+          "extra" 
+          ],
+        "attribute2_visible": true,
+        "attribute2_name": "option",
+        "attribute2_value":[
+            {
+                "name":"chilli",
+                "isChecked":true
+            },{
+                "name":"pepper",
+                "isChecked":false
+            },
+            {
+                "name":"garlic",
+                "isChecked":false
+            },{
+                "name":"tomato",
+                "isChecked":false
+            }
+           ]
+    },
+    "rKfvTgxJY7apHqCGSXzc" : {
+        "food_categoryId"   : "U5zEC7bWrdhBo0JpXNLn",
+        "food_category_name":"breakfast",
+        "name" : "Fresh Veggies and Cheese",
+        "description":"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose",
+        "short_description":"Best place to visit.",
+        "image":"https://images.pexels.com/photos/2034851/pexels-photo-2034851.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+        "promotion":false,
+        "recommended":true,
+        "favorite": [],
+        "rating":3,
+        "price": 15,
+        "stock": 300,
+        "attribute1_name": "size",
+        "attribute1_visible": true,
+        "attribute1_value":[ 
+          "small", 
+          "regular",
+          "extra" 
+          ],
+        "attribute2_visible": true,
+        "attribute2_name": "option",
+        "attribute2_value":[
+            {
+                "name":"chilli",
+                "isChecked":true
+            },{
+                "name":"pepper",
+                "isChecked":false
+            },
+            {
+                "name":"garlic",
+                "isChecked":false
+            },{
+                "name":"tomato",
+                "isChecked":false
+            }
+           ]
+    },
+    "lGcwzjq2QkYIA9TZH65d" : {
+        "food_categoryId"   : "U5zEC7bWrdhBo0JpXNLn",
+        "food_category_name":"breakfast",
+        "name" : "Fresh Spinach, Mushroom ",
+        "description":"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose",
+        "short_description":"Best place to visit.",
+        "image":"https://images.pexels.com/photos/219095/pexels-photo-219095.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+        "promotion":true,
+        "recommended":true,
+        "favorite": [],
+        "rating":3,
+        "price": 13,
+        "stock": 300,
+        "attribute1_name": "size",
+        "attribute1_visible": true,
+        "attribute1_value":[ 
+          "small", 
+          "regular",
+          "extra" 
+          ],
+        "attribute2_visible": true,
+        "attribute2_name": "option",
+        "attribute2_value":[
+            {
+                "name":"chilli",
+                "isChecked":true
+            },{
+                "name":"pepper",
+                "isChecked":false
+            },
+            {
+                "name":"garlic",
+                "isChecked":false
+            },{
+                "name":"tomato",
+                "isChecked":false
+            }
+           ]
+    },
+    "nseu3Yx95iZDdcBkGyvX" : {
+        "food_categoryId"   : "U5zEC7bWrdhBo0JpXNLn",
+        "food_category_name":"breakfast",
+        "name" : "Corn Meal Mush",
+        "description":"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose",
+        "short_description":"Best place to visit.",
+        "image":"https://images.pexels.com/photos/1801106/pexels-photo-1801106.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+        "promotion":true,
+        "recommended":true,
+        "favorite": [],
+        "rating":4,
+        "price": 21,
+        "stock": 300,
+        "attribute1_name": "size",
+        "attribute1_visible": true,
+        "attribute1_value":[ 
+          "small", 
+          "regular",
+          "extra" 
+          ],
+        "attribute2_visible": true,
+        "attribute2_name": "option",
+        "attribute2_value":[
+            {
+                "name":"chilli",
+                "isChecked":true
+            },{
+                "name":"pepper",
+                "isChecked":false
+            },
+            {
+                "name":"garlic",
+                "isChecked":false
+            },{
+                "name":"tomato",
+                "isChecked":false
+            }
+           ]
+    },
+    "OkpYgNCbFRDVjZf5E0Xr" : {
+        "food_categoryId"   : "SFvYrnRpV2MImXdc4yAT",
+        "food_category_name":"Lunch",
+        "name" : "Southern Grilled",
+        "description":"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose",
+        "short_description":"Best place to visit.",
+        "image":"https://images.pexels.com/photos/1185440/pexels-photo-1185440.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+        "promotion":true,
+        "recommended":true,
+        "favorite": [],
+        "rating":4,
+        "price": 40,
+        "stock": 300,
+        "attribute1_name": "size",
+        "attribute1_visible": true,
+        "attribute1_value":[ 
+          "small", 
+          "regular",
+          "extra" 
+          ],
+        "attribute2_visible": true,
+        "attribute2_name": "option",
+        "attribute2_value":[
+            {
+                "name":"chilli",
+                "isChecked":true
+            },{
+                "name":"pepper",
+                "isChecked":false
+            },
+            {
+                "name":"garlic",
+                "isChecked":false
+            },{
+                "name":"tomato",
+                "isChecked":false
+            }
+           ]
+    },
+    "5Y1sMhiVndmo9krzEqUD" : {
+        "food_categoryId"   : "SFvYrnRpV2MImXdc4yAT",
+        "food_category_name":"Lunch",
+        "name" : "Traditional Benedict",
+        "description":"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose",
+        "short_description":"Best place to visit.",
+        "image":"https://images.pexels.com/photos/1351238/pexels-photo-1351238.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "promotion":true,
+        "recommended":true,
+        "favorite": [],
+        "rating":4,
+        "price": 39,
+        "stock": 300,
+        "attribute1_name": "size",
+        "attribute1_visible": true,
+        "attribute1_value":[ 
+          "small", 
+          "regular",
+          "extra" 
+          ],
+        "attribute2_visible": true,
+        "attribute2_name": "option",
+        "attribute2_value":[
+            {
+                "name":"chilli",
+                "isChecked":true
+            },{
+                "name":"pepper",
+                "isChecked":false
+            },
+            {
+                "name":"garlic",
+                "isChecked":false
+            },{
+                "name":"tomato",
+                "isChecked":false
+            }
+           ]
+    },
+    "P7YIAXorDF5Z30bm9ate" : {
+        "food_categoryId"   : "NsaweERriHWJYQA16ZVTc",
+        "food_category_name":"Dinning",
+        "name" : "Country Benedict",
+        "description":"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose",
+        "short_description":"Best place to visit.",
+        "image":"https://images.pexels.com/photos/675951/pexels-photo-675951.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "promotion":true,
+        "recommended":true,
+        "favorite": [],
+        "rating":4,
+        "price": 24,
+        "stock": 300,
+        "attribute1_name": "size",
+        "attribute1_visible": true,
+        "attribute1_value":[ 
+          "small", 
+          "regular",
+          "extra" 
+          ],
+        "attribute2_visible": true,
+        "attribute2_name": "option",
+        "attribute2_value":[
+            {
+                "name":"chilli",
+                "isChecked":true
+            },{
+                "name":"pepper",
+                "isChecked":false
+            },
+            {
+                "name":"garlic",
+                "isChecked":false
+            },{
+                "name":"tomato",
+                "isChecked":false
+            }
+           ]
+    },
+    "2TFosmDMtxec3i6luPfa" : {
+        "food_categoryId"   : "IOJeZ1hjmiTxF73kG8YW",
+        "food_category_name":"Coffee",
+        "name" : "Alfegato coffee",
+        "description":"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose",
+        "short_description":"Best place to visit.",
+        "image":"https://images.pexels.com/photos/1170659/pexels-photo-1170659.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+        "promotion":false,
+        "recommended":false,
+        "favorite": [],
+        "rating":4,
+        "price": 10,
+        "stock": 300,
+        "attribute1_name": "size",
+        "attribute1_visible": true,
+        "attribute1_value":[ 
+          "tall", 
+          "regular",
+          "extra" 
+          ],
+        "attribute2_visible": true,
+        "attribute2_name": "option",
+        "attribute2_value":[
+            {
+                "name":"Sugar",
+                "isChecked":true
+            },{
+                "name":"Milk",
+                "isChecked":false
+            }
+           ]
+    },
+    "4TFosmDMtxec3i6luPsw" : {
+        "food_categoryId"   : "iUndc6JaXSvNA4073w5P",
+        "food_category_name":"Dessert",
+        "name" : "Blueberry cake",
+        "description":"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose",
+        "short_description":"Best place to visit.",
+        "image":"https://images.pexels.com/photos/1435896/pexels-photo-1435896.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "promotion":true,
+        "recommended":false,
+        "favorite": [],
+        "rating":4,
+        "price": 9,
+        "stock": 300,
+        "attribute1_name": "size",
+        "attribute1_visible": true,
+        "attribute1_value":[ 
+          "small", 
+          "regular"
+          ],
+        "attribute2_visible": false,
+        "attribute2_name": "option",
+        "attribute2_value":[
+            {
+                "name":"Sugar",
+                "isChecked":true
+            },{
+                "name":"Milk",
+                "isChecked":false
+            }
+           ]
+    }
+}

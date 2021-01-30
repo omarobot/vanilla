@@ -22,10 +22,19 @@ import { environment } from "../environments/environment";
 import { ComponentsModule } from "./components/components.module";
 import { PostModalComponent } from "./home/post/post-modal/post-modal.component";
 import { OpenModalGuard } from "./shared/guards/open-modal.guard";
+import { PrivacyPolicyPage } from "./privacy-policy/privacy-policy.page";
+import { MenuComponent } from "./shared/components/menu/menu.component";
+import { TermsOfServicePage } from "./terms-of-service/terms-of-service.page";
 // import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
-  declarations: [AppComponent, PostModalComponent],
+  declarations: [
+    AppComponent,
+    PostModalComponent,
+    PrivacyPolicyPage,
+    MenuComponent,
+    TermsOfServicePage,
+  ],
   entryComponents: [],
   imports: [
     BrowserModule,

@@ -17,4 +17,4 @@ import { PostPageRoutingModule } from "./post-routing.module";
   ],
   declarations: [PostPage],
 })
-export class Tab3PageModule {}
+export class PostPageModule {}

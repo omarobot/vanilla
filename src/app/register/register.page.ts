@@ -100,7 +100,7 @@ export class RegisterPage implements OnInit {
     return await modal.present();
   }
 
-  signUp(email, password) {
+  signUp() {
     console.log(this.signupForm);
 
     this.authService

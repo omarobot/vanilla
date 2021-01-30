@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { LocationFormPage } from './location-form.page';
@@ -7,7 +7,7 @@ describe('LocationFormPage', () => {
   let component: LocationFormPage;
   let fixture: ComponentFixture<LocationFormPage>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ LocationFormPage ],
       imports: [IonicModule.forRoot()]

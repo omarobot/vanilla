@@ -26,20 +26,22 @@ const routes: Routes = [
           import("./search/search.module").then((m) => m.SearchPageModule),
       },
       {
-        path: "tab3",
+        path: "post",
         canActivate: [OpenModalGuard],
         loadChildren: () =>
-          import("./post/post.module").then((m) => m.Tab3PageModule),
+          import("./post/post.module").then((m) => m.PostPageModule),
       },
       {
-        path: "tab4",
+        path: "interactions",
         loadChildren: () =>
-          import("./tab4/tab4.module").then((m) => m.Tab4PageModule),
+          import("./interactions/interactions.module").then(
+            (m) => m.InteractionsPageModule
+          ),
       },
       {
-        path: "tab5",
+        path: "profile",
         loadChildren: () =>
-          import("./tab5/tab5.module").then((m) => m.Tab5PageModule),
+          import("./profile/profile.module").then((m) => m.ProfilePageModule),
       },
     ],
   },
