@@ -8,7 +8,7 @@ import { Tab5PageRoutingModule } from "./tab5-routing.module";
 
 import { Tab5Page } from "./tab5.page";
 import { ShellModule } from "src/app/shell/shell.module";
-import { TranslateModule } from "@ngx-translate/core";
+// import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
   imports: [
@@ -17,7 +17,7 @@ import { TranslateModule } from "@ngx-translate/core";
     IonicModule,
     Tab5PageRoutingModule,
     ShellModule,
-    TranslateModule,
+    // TranslateModule,
   ],
   declarations: [Tab5Page],
 })
