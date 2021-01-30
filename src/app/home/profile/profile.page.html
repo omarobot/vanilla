@@ -20,7 +20,7 @@
 </ion-header>
 
 <ion-content class="user-profile-content">
-  <!-- <ion-row class="user-details-section">
+  <ion-row class="user-details-section">
     <ion-col class="user-image-wrapper">
       <app-aspect-ratio [ratio]="{w: 1, h: 1}">
         <app-image-shell class="user-image" animation="spinner" [src]="profile?.userImage"></app-image-shell>
@@ -35,6 +35,9 @@
           <h5 class="user-title">
             <app-text-shell [data]="profile?.job"></app-text-shell>
           </h5>
+          <h6 class="user-location">
+            <app-text-shell [data]="profile?.location"></app-text-shell>
+          </h6>
         </ion-col>
         <ion-col class="membership-col">
           <span class="user-membership">
@@ -44,8 +47,8 @@
       </ion-row>
       <ion-row class="actions-row">
         <ion-col class="main-actions">
-          <ion-button class="call-to-action-btn" size="small" color="primary">{{ 'FOLLOW' | translate }}</ion-button>
-          <ion-button class="call-to-action-btn" size="small" color="medium">{{ 'MESSAGE' | translate }}</ion-button>
+          <ion-button size="small" color="secondary">{{ 'FOLLOW' | translate }}</ion-button>
+          <ion-button size="small" color="medium">{{ 'MESSAGE' | translate }}</ion-button>
         </ion-col>
         <ion-col class="secondary-actions">
           <ion-button class="more-btn" size="small" fill="clear" color="medium">
@@ -56,20 +59,20 @@
     </ion-col>
   </ion-row>
   <ion-row class="user-stats-section">
-    <ion-col class="user-stats-wrapper" size="4">
+    <!-- <ion-col class="user-stats-wrapper" size="4">
       <span class="stat-value">
         <app-text-shell [data]="profile?.likes"></app-text-shell>
       </span>
       <span class="stat-name">{{ 'LIKES' | translate }}</span>
-    </ion-col>
-    <ion-col class="user-stats-wrapper" size="4">
-      <span class="stat-value">
+    </ion-col> -->
+    <ion-col class="user-stats-wrapper" size="6">
+      <span>
         <app-text-shell [data]="profile?.followers"></app-text-shell>
       </span>
       <span class="stat-name">{{ 'FOLLOWERS' | translate }}</span>
     </ion-col>
-    <ion-col class="user-stats-wrapper" size="4">
-      <span class="stat-value">
+    <ion-col class="user-stats-wrapper" size="6">
+      <span>
         <app-text-shell [data]="profile?.following"></app-text-shell>
       </span>
       <span class="stat-name">{{ 'FOLLOWING' | translate }}</span>
@@ -84,7 +87,7 @@
   <div class="user-friends-section">
     <ion-row class="heading-row">
       <h3 class="details-section-title">{{ 'FRIENDS' | translate }}</h3>
-      <a class="heading-call-to-action" [routerLink]="['/app/user/friends']">{{ 'SEE_ALL' | translate }}</a>
+      <a class="heading-call-to-action" [routerLink]="['/app/user/friends']">{{ 'See All' | translate }}</a>
     </ion-row>
     <ion-row class="friends-row">
       <ion-col class="friend-item" *ngFor="let friend of profile?.friends">
@@ -101,16 +104,16 @@
   <div class="user-photos-section">
     <ion-row class="heading-row">
       <h3 class="details-section-title">{{ 'PHOTOS' | translate }}</h3>
-      <a class="heading-call-to-action">{{ 'SEE_ALL' | translate }}</a>
+      <a class="heading-call-to-action">{{ 'See All' | translate }}</a>
     </ion-row>
     <ion-row class="pictures-row">
       <ion-col class="picture-item" *ngFor="let photo of profile?.photos">
-        <app-image-shell [display]="'cover'" class="user-photo-image">
+        <app-image-shell [display]="'cover'" [src]="photo.image" class="user-photo-image">
 
           <app-aspect-ratio [ratio]="{w:1, h:1}">
           </app-aspect-ratio>
         </app-image-shell>
       </ion-col>
     </ion-row>
-  </div> -->
+  </div>
 </ion-content>

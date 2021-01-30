@@ -8,7 +8,8 @@ import { ProfilePageRoutingModule } from "./profile-routing.module";
 
 import { ProfilePage } from "./profile.page";
 import { ShellModule } from "src/app/shell/shell.module";
-// import { TranslateModule } from "@ngx-translate/core";
+import { TranslateModule } from "@ngx-translate/core";
+import { UserProfileResolver } from "./profile.resolver";
 
 @NgModule({
   imports: [
@@ -17,8 +18,9 @@ import { ShellModule } from "src/app/shell/shell.module";
     IonicModule,
     ProfilePageRoutingModule,
     ShellModule,
-    // TranslateModule,
+    TranslateModule,
   ],
   declarations: [ProfilePage],
+  providers: [UserProfileResolver],
 })
 export class ProfilePageModule {}

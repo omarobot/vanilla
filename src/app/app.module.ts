@@ -1,5 +1,8 @@
 import { NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
+import {
+  BrowserModule,
+  BrowserTransferStateModule,
+} from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
 
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
@@ -25,7 +28,7 @@ import { OpenModalGuard } from "./shared/guards/open-modal.guard";
 import { PrivacyPolicyPage } from "./privacy-policy/privacy-policy.page";
 import { MenuComponent } from "./shared/components/menu/menu.component";
 import { TermsOfServicePage } from "./terms-of-service/terms-of-service.page";
-// import { TranslateModule } from "@ngx-translate/core";
+import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -40,13 +43,14 @@ import { TermsOfServicePage } from "./terms-of-service/terms-of-service.page";
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    BrowserTransferStateModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     HttpClientModule,
     ComponentsModule,
-    // TranslateModule.forRoot(),
+    TranslateModule.forRoot(),
   ],
   providers: [
     StatusBar,

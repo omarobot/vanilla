@@ -1,6 +1,3 @@
-@import "theme/mixins/scrollbars";
-@import "theme/mixins/inputs/select-alert";
-
 // Custom variables
 // Note:  These ones were added by us and have nothing to do with Ionic CSS Custom Properties
 :host {
@@ -42,8 +39,14 @@
 
       .user-title {
         margin: 0px;
-        color: var(--ion-color-medium);
+        color: var(--ion-color-tertiary);
         font-size: 16px;
+      }
+
+      .user-location {
+        margin: 3px;
+        color: var(--ion-color-medium-shade);
+        font-size: 12px;
       }
 
       .membership-col {
@@ -53,7 +56,7 @@
 
       .user-membership {
         display: block;
-        background-color: var(--ion-color-secondary);
+        background-color: var(--ion-color-tertiary);
         color: var(--ion-color-lightest);
         border-radius: var(--app-narrow-radius);
         padding: 4px 8px;
@@ -179,8 +182,6 @@
     margin-left: calc(var(--page-margin) * -1);
     margin-right: calc(var(--page-margin) * -1);
 
-    @include hide-scrollbars();
-
     &::before,
     &::after {
       content: '';
@@ -244,17 +245,18 @@
     }
   }
 }
+
 // Alerts and in general all overlays are attached to the body or ion-app directly
 // We need to use ::ng-deep to access it from here
-::ng-deep .language-alert {
-  @include select-alert();
+// ::ng-deep .language-alert {
+//   @include select-alert();
 
-  // Variables should be in a deeper selector or after the mixin include to override default values
-  --select-alert-color: var(--ion-color-lightest);
-  --select-alert-background: var(--ion-color-primary);
-  --select-alert-margin: var(--app-fair-margin);
+//   // Variables should be in a deeper selector or after the mixin include to override default values
+//   --select-alert-color: var(--ion-color-lightest);
+//   --select-alert-background: var(--ion-color-primary);
+//   --select-alert-margin: var(--app-fair-margin);
 
-  .alert-message {
-    display: none;
-  }
-}
+//   .alert-message {
+//     display: none;
+//   }
+// }
