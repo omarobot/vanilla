@@ -1,15 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 
-import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-  AngularFirestoreDocument,
-} from "@angular/fire/firestore";
+import { AngularFirestore } from "@angular/fire/firestore";
 import { MenuController } from "@ionic/angular";
-// import { firestore } from 'firebase/app' // new version : ex arrayContanin, arrayUnion
-import * as firebase from "firebase";
-
-import { Observable } from "rxjs";
 import { PostService } from "src/app/shared/services/post.service";
 @Component({
   selector: "app-feed",

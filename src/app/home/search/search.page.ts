@@ -10,8 +10,8 @@ import { PostService } from "src/app/shared/services/post.service";
   styleUrls: ["search.page.scss"],
 })
 export class SearchPage implements OnInit {
-  public placesView: boolean = true;
-  public eventsView: boolean = false;
+  public placesView = true;
+  public eventsView = false;
 
   ngOnInit() {
     this.viewPlaces();

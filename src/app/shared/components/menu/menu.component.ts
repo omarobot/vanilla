@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { MenuController } from "@ionic/angular/providers/menu-controller";
 
 @Component({
   selector: "app-menu",

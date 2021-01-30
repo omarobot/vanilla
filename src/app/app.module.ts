@@ -22,6 +22,7 @@ import { environment } from "../environments/environment";
 import { ComponentsModule } from "./components/components.module";
 import { PostModalComponent } from "./home/post/post-modal/post-modal.component";
 import { OpenModalGuard } from "./shared/guards/open-modal.guard";
+import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
   declarations: [AppComponent, PostModalComponent],
@@ -36,6 +37,7 @@ import { OpenModalGuard } from "./shared/guards/open-modal.guard";
     AngularFireStorageModule,
     HttpClientModule,
     ComponentsModule,
+    TranslateModule.forRoot(),
   ],
   providers: [
     StatusBar,

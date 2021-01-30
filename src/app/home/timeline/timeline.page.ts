@@ -1,5 +1,4 @@
-import { Component } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import { Component, OnInit } from "@angular/core";
 import { Post } from "../../shared/models/post";
 import { PostService } from "../../shared/services/post.service";
 import { ModalController } from "@ionic/angular";
@@ -10,7 +9,7 @@ import { LocationFormPage } from "./location/location-form.page";
   templateUrl: "timeline.page.html",
   styleUrls: ["timeline.page.scss"],
 })
-export class TimelinePage {
+export class TimelinePage implements OnInit {
   posts = [];
 
   constructor(
@@ -21,7 +20,7 @@ export class TimelinePage {
   ngOnInit() {
     this.presentModal();
     this.fetchPosts();
-    let postRes = this.postService.getPostList();
+    const postRes = this.postService.getPostList();
     postRes.snapshotChanges().subscribe((res) => {
       this.posts = [];
       res.forEach((item) => {

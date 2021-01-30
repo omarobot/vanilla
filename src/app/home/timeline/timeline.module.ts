@@ -6,7 +6,6 @@ import { TimelinePage } from "./timeline.page";
 
 import { TimelinePageRoutingModule } from "./timeline.routing.module";
 import { FeedPage } from "./feed/feed.page";
-import { BrowserModule } from "@angular/platform-browser";
 import { LocationFormPage } from "./location/location-form.page";
 
 @NgModule({

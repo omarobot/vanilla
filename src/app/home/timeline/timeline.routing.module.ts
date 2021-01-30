@@ -7,18 +7,6 @@ const routes: Routes = [
     path: "",
     component: TimelinePage,
   },
-  {
-    path: "edit-post/:id",
-    loadChildren: () =>
-      import("./edit-post/edit-post.module").then((m) => m.EditPostPageModule),
-  },
-  // {
-  //   path: "location-form",
-  //   loadChildren: () =>
-  //     import("./location/location-form.module").then(
-  //       (m) => m.LocationFormPageModule
-  //     ),
-  // },
 ];
 
 @NgModule({
