@@ -124,4 +124,18 @@ export class AuthenticationService {
       this.router.navigate(["login"]);
     });
   }
+
+  refreshToken() {
+    firebase
+      .auth()
+      .currentUser.reload()
+      .then((y) => {
+        console.log(y);
+      });
+    this.ngFireAuth.currentUser
+      .then((u) => u.reload())
+      .then((x) => {
+        console.log(x);
+      });
+  }
 }

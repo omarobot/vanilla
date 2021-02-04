@@ -17,6 +17,9 @@
       <ion-button type="submit" (click)="authService.sendVerificationEmail()" expand="block">
         Resend Verification Email
       </ion-button>
+      <ion-button type="submit" (click)="authService.refreshToken()" expand="block">
+        Refresh
+      </ion-button>
     </ion-row>
   </ion-grid>
 </ion-content>

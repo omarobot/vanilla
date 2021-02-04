@@ -30,6 +30,7 @@
     "@ionic/angular": "^5.0.0",
     "@nguniversal/express-engine": "^11.1.1",
     "@ngx-translate/core": "^13.0.0",
+    "capacitor-firebase-auth": "^2.3.5",
     "dayjs": "^1.10.3",
     "firebase": "^8.2.3",
     "google-libphonenumber": "^3.2.15",
