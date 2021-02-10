@@ -53,6 +53,12 @@
       </ion-chip>
     </p>
 
+    <div class="form-group col-12 image">
+      <input type="file" id="file" #userPhoto (change)="onFileSelected($event)" name="image" autocomplete="off" />
+    </div>
+    <div *ngIf="fb" class="list">
+      <img src="{{ fb }}" alt="" />
+    </div>
 
   </ion-header>
 

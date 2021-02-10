@@ -7,12 +7,14 @@ import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from "@angular/fire/firestore";
+import { Observable, Subject } from "rxjs";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthenticationService {
   userData: any;
+  redirectResult: Subject<any> = new Subject<any>();
 
   constructor(
     public afStore: AngularFirestore,
@@ -20,6 +22,8 @@ export class AuthenticationService {
     public router: Router,
     public ngZone: NgZone
   ) {
+    /* Saving user data in localstorage when 
+    logged in and setting up null when logged out */
     this.ngFireAuth.authState.subscribe((user) => {
       if (user) {
         this.userData = user;
@@ -72,6 +76,7 @@ export class AuthenticationService {
 
   // Returns true when user's email is verified
   get isEmailVerified(): boolean {
+    //TODO: Verify that email exists or not first
     const user = JSON.parse(localStorage.getItem("user"));
     return user.emailVerified !== false ? true : false;
   }
@@ -87,15 +92,30 @@ export class AuthenticationService {
       .signInWithPopup(provider)
       .then((result) => {
         console.log(result);
-
-        this.ngZone.run(() => {
-          this.router.navigate(["home"]);
-        });
         this.setUserData(result.user);
+        this.ngFireAuth.authState.subscribe((user) => {
+          if (user) {
+            this.userData = user;
+            localStorage.setItem("user", JSON.stringify(this.userData));
+            JSON.parse(localStorage.getItem("user"));
+            this.redirectResult.next(result);
+            this.ngZone.run(() => {
+              this.router.navigate(["home"]);
+            });
+          } else {
+            localStorage.setItem("user", null);
+            JSON.parse(localStorage.getItem("user"));
+          }
+        });
       })
       .catch((error) => {
-        window.alert(error);
+        // window.alert(error);
+        this.redirectResult.next(error);
       });
+  }
+
+  getRedirectResult(): Observable<any> {
+    return this.redirectResult.asObservable();
   }
 
   // Store user in localStorage
@@ -126,12 +146,8 @@ export class AuthenticationService {
   }
 
   refreshToken() {
-    firebase
-      .auth()
-      .currentUser.reload()
-      .then((y) => {
-        console.log(y);
-      });
+    console.log(firebase.auth().currentUser.emailVerified);
+
     this.ngFireAuth.currentUser
       .then((u) => u.reload())
       .then((x) => {

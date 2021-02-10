@@ -48,13 +48,13 @@ export class PostService {
     return this.http.get("./assets/categories.json");
   }
   // Create
-  createPost(post: Post) {
-    return this.postListRef.push({
-      author: post.author,
-      title: post.title,
-      content: post.content,
-    });
-  }
+  // createPost(post: Post) {
+  //   return this.postListRef.push({
+  //     author: post.author,
+  //     title: post.title,
+  //     content: post.content,
+  //   });
+  // }
 
   // Get Single
   getPost(id: string) {
@@ -69,13 +69,13 @@ export class PostService {
   }
 
   // Update
-  updatePost(id, post: Post) {
-    return this.postRef.update({
-      author: post.author,
-      title: post.title,
-      content: post.content,
-    });
-  }
+  // updatePost(id, post: Post) {
+  //   return this.postRef.update({
+  //     author: post.author,
+  //     title: post.title,
+  //     content: post.content,
+  //   });
+  // }
 
   // Delete
   deletePost(id: string) {

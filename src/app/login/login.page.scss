@@ -67,6 +67,20 @@ ion-content {
         }
     }
 
+    .error-container {
+        .error-message {
+            margin: calc(var(--page-margin) / 2) 0px;
+            display: flex;
+            align-items: center;
+            color: var(--ion-color-danger);
+            font-size: 14px;
+
+            ion-icon {
+                padding-inline-end: calc(var(--page-margin) / 2);
+            }
+        }
+    }
+
     .login-btn {
         margin: calc(var(--page-margin) / 2) 0px;
     }
@@ -97,6 +111,15 @@ ion-content {
     }
 
     .social-auth-options {
+        padding-top: 10px;
+
+        ion-icon {
+            font-size: 50px;
+            color: var(--ion-color-light);
+        }
+
+        text-align: center;
+
         .options-divider {
             color: var(--ion-color-medium);
             margin: var(--page-margin) 0px;

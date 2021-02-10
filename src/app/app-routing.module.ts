@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { AuthGuard } from "./shared/guards/auth.guard";
 
 const routes: Routes = [
   { path: "", redirectTo: "login", pathMatch: "full" },
@@ -10,6 +11,7 @@ const routes: Routes = [
   },
   {
     path: "home",
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import("./home/home.module").then((m) => m.HomePageModule),
   },
@@ -28,7 +30,10 @@ const routes: Routes = [
 ];
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, relativeLinkResolution: 'legacy' }),
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: PreloadAllModules,
+      relativeLinkResolution: "legacy",
+    }),
   ],
   exports: [RouterModule],
 })

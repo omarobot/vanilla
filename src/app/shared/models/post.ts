@@ -1,6 +1,12 @@
 export class Post {
-  $key: string;
-  author: string;
-  title: string;
+  id: string;
+  userName?: string;
+  displayName: string;
+  location: string;
   content: string;
+  likesCount: number;
+  commentsCount: number;
+  pictures?: Array<string>;
+  timeStamp: string;
+  tags?: Array<string>;
 }
