@@ -7,5 +7,5 @@ export interface User {
   photoURL: string;
   emailVerified: boolean;
   displayName?: string;
-  birthdate?: Date;
+  birthdate?: string;
 }

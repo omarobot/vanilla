@@ -118,7 +118,9 @@ export class AuthenticationService {
     return this.redirectResult.asObservable();
   }
 
-  // Store user in localStorage
+  /* Setting up user data when sign in with username/password, 
+  sign up with username/password and sign in with social auth  
+  provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
   setUserData(user) {
     const userRef: AngularFirestoreDocument<any> = this.afStore.doc(
       `users/${user.uid}`
@@ -145,13 +147,13 @@ export class AuthenticationService {
     });
   }
 
-  refreshToken() {
-    console.log(firebase.auth().currentUser.emailVerified);
+  // refreshToken() {
+  //   console.log(firebase.auth().currentUser.emailVerified);
 
-    this.ngFireAuth.currentUser
-      .then((u) => u.reload())
-      .then((x) => {
-        console.log(x);
-      });
-  }
+  //   this.ngFireAuth.currentUser
+  //     .then((u) => u.reload())
+  //     .then((x) => {
+  //       console.log(x);
+  //     });
+  // }
 }

@@ -7,7 +7,7 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button>
+      <ion-button (click)="addPost()">
         Post
       </ion-button>
     </ion-buttons>
@@ -56,8 +56,8 @@
     <div class="form-group col-12 image">
       <input type="file" id="file" #userPhoto (change)="onFileSelected($event)" name="image" autocomplete="off" />
     </div>
-    <div *ngIf="fb" class="list">
-      <img src="{{ fb }}" alt="" />
+    <div *ngIf="imageURLS.length > 0" class="list">
+      <img *ngFor="let image of imageURLS" src="{{ image }}" alt="" />
     </div>
 
   </ion-header>

@@ -3,6 +3,7 @@ import { Post } from "../../shared/models/post";
 import { PostService } from "../../shared/services/post.service";
 import { ModalController } from "@ionic/angular";
 import { LocationFormPage } from "./location/location-form.page";
+import { PostsService } from "src/app/shared/services/posts.service";
 
 @Component({
   selector: "app-timeline",
@@ -14,12 +15,14 @@ export class TimelinePage implements OnInit {
 
   constructor(
     private postService: PostService,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private postsService: PostsService
   ) {}
 
   ngOnInit() {
     this.presentModal();
     this.fetchPosts();
+    this.getPosts();
     const postRes = this.postService.getPostList();
     postRes.snapshotChanges().subscribe((res) => {
       this.posts = [];
@@ -37,6 +40,22 @@ export class TimelinePage implements OnInit {
       cssClass: "my-custom-class",
     });
     return await modal.present();
+  }
+
+  getPosts() {
+    this.postsService.getPosts().subscribe(
+      (posts: any) => {
+        console.log(posts);
+
+        posts.docs.forEach((doc) => {
+          // this.myArray.push(doc.data());
+          console.log(doc.data());
+        });
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
   }
 
   fetchPosts() {

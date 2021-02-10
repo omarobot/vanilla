@@ -7,6 +7,6 @@ export class Post {
   likesCount: number;
   commentsCount: number;
   pictures?: Array<string>;
-  timeStamp: string;
+  timeStamp: number;
   tags?: Array<string>;
 }

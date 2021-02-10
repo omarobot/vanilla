@@ -5,6 +5,7 @@ import { ModalController } from "@ionic/angular";
 import { Observable } from "rxjs";
 import { finalize } from "rxjs/operators";
 import { ModalService } from "src/app/shared/services/modal.service";
+import { PostsService } from "src/app/shared/services/posts.service";
 
 export interface Image {
   id: string;
@@ -17,9 +18,9 @@ export interface Image {
   styleUrls: ["./post-modal.component.scss"],
 })
 export class PostModalComponent implements OnInit {
-  title = "cloudsSorage";
-  selectedFile: File = null;
-  fb;
+  // title = "cloudsSorage";
+  // selectedFile: File = null;
+  imageURLS: Array<any> = [];
   downloadURL: Observable<string>;
   // display$: Observable<boolean>;
 
@@ -31,9 +32,10 @@ export class PostModalComponent implements OnInit {
   // loading: boolean = false;
 
   constructor(
-    private afs: AngularFirestore,
+    private firestore: AngularFirestore,
     private storage: AngularFireStorage,
-    public modalService: ModalService
+    public modalService: ModalService,
+    private postsService: PostsService
   ) {}
 
   ngOnInit() {}
@@ -51,9 +53,9 @@ export class PostModalComponent implements OnInit {
           this.downloadURL = fileRef.getDownloadURL();
           this.downloadURL.subscribe((url) => {
             if (url) {
-              this.fb = url;
+              this.imageURLS.push(url);
             }
-            console.log(this.fb);
+            console.log(this.imageURLS[this.imageURLS.length - 1]);
           });
         })
       )
@@ -61,6 +63,17 @@ export class PostModalComponent implements OnInit {
         if (url) {
           console.log(url);
         }
+      });
+  }
+
+  addPost() {
+    this.postsService
+      .addPost(this.imageURLS)
+      .then((data: any) => {
+        console.log(data);
+      })
+      .catch((error: any) => {
+        console.log(error);
       });
   }
 
