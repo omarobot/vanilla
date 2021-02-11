@@ -1,12 +1,12 @@
 export class Post {
-  id: string;
   userName?: string;
+  profileImage?: string;
   displayName: string;
   location: string;
   content: string;
-  likesCount: number;
-  commentsCount: number;
-  pictures?: Array<string>;
+  likeCount: number;
+  commentCount: number;
+  images?: Array<string>;
   timeStamp: number;
   tags?: Array<string>;
 }

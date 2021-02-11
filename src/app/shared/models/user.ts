@@ -4,7 +4,7 @@ export interface User {
   firstName?: string;
   lastName?: string;
   username?: string;
-  photoURL: string;
+  photoURL?: string;
   emailVerified: boolean;
   displayName?: string;
   birthdate?: string;

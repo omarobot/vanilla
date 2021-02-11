@@ -13,8 +13,8 @@ import { Observable, Subject } from "rxjs";
   providedIn: "root",
 })
 export class AuthenticationService {
-  userData: any;
-  redirectResult: Subject<any> = new Subject<any>();
+  public userData: any;
+  public redirectResult: Subject<any> = new Subject<any>();
 
   constructor(
     public afStore: AngularFirestore,
@@ -145,6 +145,10 @@ export class AuthenticationService {
       localStorage.removeItem("user");
       this.router.navigate(["login"]);
     });
+  }
+
+  getUserInfo(): Promise<User> {
+    return this.ngFireAuth.currentUser;
   }
 
   // refreshToken() {

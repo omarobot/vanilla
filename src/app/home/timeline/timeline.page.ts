@@ -4,6 +4,7 @@ import { PostService } from "../../shared/services/post.service";
 import { ModalController } from "@ionic/angular";
 import { LocationFormPage } from "./location/location-form.page";
 import { PostsService } from "src/app/shared/services/posts.service";
+import { LocationService } from "src/app/shared/services/location.service";
 
 @Component({
   selector: "app-timeline",
@@ -11,27 +12,31 @@ import { PostsService } from "src/app/shared/services/posts.service";
   styleUrls: ["timeline.page.scss"],
 })
 export class TimelinePage implements OnInit {
-  posts = [];
+  // privaposts = [];
+  private location: string;
 
   constructor(
     private postService: PostService,
-    public modalController: ModalController,
-    private postsService: PostsService
+    private locationService: LocationService,
+    public modalController: ModalController
   ) {}
 
   ngOnInit() {
-    this.presentModal();
-    this.fetchPosts();
-    this.getPosts();
-    const postRes = this.postService.getPostList();
-    postRes.snapshotChanges().subscribe((res) => {
-      this.posts = [];
-      res.forEach((item) => {
-        let a = item.payload.toJSON();
-        a["$key"] = item.key;
-        this.posts.push(a as Post);
-      });
-    });
+    this.location = this.locationService.location;
+    if (!this.location) {
+      this.presentModal();
+    }
+    // this.presentModal();
+    // this.fetchPosts();
+    // const postRes = this.postService.getPostList();
+    // postRes.snapshotChanges().subscribe((res) => {
+    //   this.posts = [];
+    //   res.forEach((item) => {
+    //     let a = item.payload.toJSON();
+    //     a["$key"] = item.key;
+    //     this.posts.push(a as Post);
+    //   });
+    // });
   }
 
   async presentModal() {
@@ -42,35 +47,19 @@ export class TimelinePage implements OnInit {
     return await modal.present();
   }
 
-  getPosts() {
-    this.postsService.getPosts().subscribe(
-      (posts: any) => {
-        console.log(posts);
+  // fetchPosts() {
+  //   this.postService
+  //     .getPostList()
+  //     .valueChanges()
+  //     .subscribe((res) => {
+  //       console.log(res);
+  //     });
+  // }
 
-        posts.docs.forEach((doc) => {
-          // this.myArray.push(doc.data());
-          console.log(doc.data());
-        });
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
-  }
-
-  fetchPosts() {
-    this.postService
-      .getPostList()
-      .valueChanges()
-      .subscribe((res) => {
-        console.log(res);
-      });
-  }
-
-  deletePost(id) {
-    console.log(id);
-    if (window.confirm("Do you really want to delete?")) {
-      this.postService.deletePost(id);
-    }
-  }
+  // deletePost(id) {
+  //   console.log(id);
+  //   if (window.confirm("Do you really want to delete?")) {
+  //     this.postService.deletePost(id);
+  //   }
+  // }
 }

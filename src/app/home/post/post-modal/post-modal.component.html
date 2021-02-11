@@ -7,7 +7,7 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button (click)="addPost()">
+      <ion-button (click)="addPost()" [disabled]="canPost()">
         Post
       </ion-button>
     </ion-buttons>
@@ -28,8 +28,9 @@
         <p>Omar Saravia</p>
       </ion-label>
     </ion-item>
-    <br>
-    <ion-textarea style="padding-left: 10px; padding-right: 10px" placeholder="What's good..." rows="5">
+    <!-- <br> -->
+    <ion-textarea style="padding-left: 10px; padding-right: 10px" placeholder="What's good..." rows="5"
+      (ionChange)="inputChange($event)">
     </ion-textarea>
 
     <ion-textarea style="padding-left: 10px; padding-right: 10px" placeholder="Add tags" rows="1">

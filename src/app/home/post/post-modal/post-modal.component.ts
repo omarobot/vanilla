@@ -1,9 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { AngularFireStorage } from "@angular/fire/storage";
+import { Router } from "@angular/router";
 import { ModalController } from "@ionic/angular";
 import { Observable } from "rxjs";
 import { finalize } from "rxjs/operators";
+import { User } from "src/app/shared/models/user";
+import { AuthenticationService } from "src/app/shared/services/authentication.service";
 import { ModalService } from "src/app/shared/services/modal.service";
 import { PostsService } from "src/app/shared/services/posts.service";
 
@@ -20,6 +23,8 @@ export interface Image {
 export class PostModalComponent implements OnInit {
   // title = "cloudsSorage";
   // selectedFile: File = null;
+  user: User;
+  inputValue: string = "";
   imageURLS: Array<any> = [];
   downloadURL: Observable<string>;
   // display$: Observable<boolean>;
@@ -35,10 +40,26 @@ export class PostModalComponent implements OnInit {
     private firestore: AngularFirestore,
     private storage: AngularFireStorage,
     public modalService: ModalService,
-    private postsService: PostsService
+    private postsService: PostsService,
+    private authService: AuthenticationService,
+    private router: Router
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getUserInfo();
+  }
+
+  getUserInfo() {
+    this.authService
+      .getUserInfo()
+      .then((user) => {
+        console.log(user);
+        this.user = user;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   onFileSelected(event) {
     var n = Date.now();
@@ -68,62 +89,29 @@ export class PostModalComponent implements OnInit {
 
   addPost() {
     this.postsService
-      .addPost(this.imageURLS)
+      .addPost(this.imageURLS, this.user, this.inputValue)
       .then((data: any) => {
         console.log(data);
+        this.postsService.triggerPostResult(true);
+        this.close();
       })
       .catch((error: any) => {
         console.log(error);
       });
   }
 
-  // uploadImage(event) {
-  //   this.loading = true;
-  //   if (event.target.files && event.target.files[0]) {
-  //     var reader = new FileReader();
+  inputChange(input) {
+    this.inputValue = input.detail.value;
+  }
 
-  //     reader.readAsDataURL(event.target.files[0]);
-  //     // For Preview Of Image
-  //     (reader.onload = (e: any) => {
-  //       // called once readAsDataURL is completed
-  //       this.url = e.target.result;
-
-  //       // For Uploading Image To Firebase
-  //       const fileraw = event.target.files[0];
-  //       console.log(fileraw);
-  //       const filePath =
-  //         "/Image/" +
-  //         this.newImage.id +
-  //         "/" +
-  //         "Image" +
-  //         (Math.floor(1000 + Math.random() * 9000) + 1);
-  //       const result = this.SaveImageRef(filePath, fileraw);
-  //       const ref = result.ref;
-  //       result.task.then((a) => {
-  //         ref.getDownloadURL().subscribe((a) => {
-  //           console.log(a);
-
-  //           this.newImage.image = a;
-  //           this.loading = false;
-  //         });
-
-  //         this.afs.collection("Image").doc(this.newImage.id).set(this.newImage);
-  //       });
-  //     }),
-  //       (error) => {
-  //         alert("Error");
-  //       };
-  //   }
-  // }
-
-  // SaveImageRef(filePath, file) {
-  //   return {
-  //     task: this.storage.upload(filePath, file),
-  //     ref: this.storage.ref(filePath),
-  //   };
-  // }
+  canPost() {
+    return !(this.inputValue.length > 0 || this.imageURLS.length > 0
+      ? true
+      : false);
+  }
 
   close() {
+    this.router.navigate(["home"]);
     this.modalService.close();
   }
 }
