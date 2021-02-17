@@ -10,8 +10,13 @@
         <h3>{{post?.displayName}}</h3>
         <p>{{timeHelper.getRelativeTime(post.timeStamp)}}</p>
       </ion-label>
+      <ion-button slot="end" fill="clear" size="small" color="dark" (click)="presentActionSheet(post)">
+        <ion-icon slot="end" name="ellipsis-horizontal-outline" color="dark"></ion-icon>
+        <!-- <ion-badge color="danger">2.3k</ion-badge> -->
+        <!-- <ion-label> DELETE</ion-label> -->
+      </ion-button>
     </ion-item>
-    <ion-slides *ngIf="post.images" pager>
+    <ion-slides *ngIf="post.images && post.images.length > 0" pager>
       <ng-container *ngFor="let url of  post.images">
         <ion-slide [ngStyle]="{'background' : 'url(' + url + ')'}">
         </ion-slide>
@@ -31,9 +36,13 @@
           <ion-icon name="location-outline"></ion-icon> {{post?.location}}
         </h3>
       </ion-card-title>
-      <p>
+      <p class="post-content">
         {{post?.content}}
       </p>
+      <p *ngIf="post.tags && post.tags.length > 0">
+        <ion-badge *ngFor="let tag of post.tags" color="secondary">{{tag.value}}</ion-badge>
+      </p>
+
     </ion-card-content>
 
     <ion-row>

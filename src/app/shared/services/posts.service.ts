@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { Observable, Subject } from "rxjs";
 import { Post } from "../models/post";
+import { Tag } from "../models/tag";
 import { User } from "../models/user";
 import { LocationService } from "./location.service";
 
@@ -17,12 +18,20 @@ export class PostsService {
   public postResult: Subject<any> = new Subject<any>();
 
   getPosts(): Observable<any> {
-    return this.firestore.collection("posts").get();
+    return this.firestore
+      .collection("posts")
+      .valueChanges({ idField: "postId" });
   }
 
-  addPost(images: Array<string>, user: User, input: string): Promise<any> {
+  addPost(
+    images: Array<string>,
+    user: User,
+    input: string,
+    tags: Array<Tag>
+  ): Promise<any> {
     const post: Post = {
       displayName: user.displayName,
+      uid: user.uid,
       location: this.locationService.location,
       content: input,
       likeCount: 0,
@@ -30,9 +39,14 @@ export class PostsService {
       timeStamp: Date.now(),
       images: images,
       profileImage: user.photoURL,
+      tags: tags,
     };
 
     return this.firestore.collection("posts").add(post);
+  }
+
+  deletePost(post: Post) {
+    return this.firestore.collection("posts").doc(post.postId).delete();
   }
 
   getPostResult(): Observable<any> {

@@ -21,7 +21,24 @@
 ion-card {
   margin: 0px 0px 15px 0px !important;
   width: 100% !important;
+
+  .post-content {
+    padding-left: 5px;
+  }
+
+  p {
+    padding-top: 5px;
+
+    ion-badge {
+      margin-right: 3px;
+      font-weight: 400;
+    }
+  }
+
+
 }
+
+
 
 .fit-screen {
   max-width: 100%;

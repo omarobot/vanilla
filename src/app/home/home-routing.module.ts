@@ -2,11 +2,15 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { HomePage } from "./home.page";
 import { OpenModalGuard } from "../shared/guards/open-modal.guard";
+import { GetUserResolver } from "./get-user.resolver";
 
 const routes: Routes = [
   {
     path: "",
     component: HomePage,
+    resolve: {
+      data: GetUserResolver,
+    },
     children: [
       {
         path: "",

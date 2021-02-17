@@ -36,7 +36,11 @@
     <ion-textarea style="padding-left: 10px; padding-right: 10px" placeholder="Add tags" rows="1">
     </ion-textarea>
     <p>
-      <ion-chip outline color="secondary">
+      <ion-chip *ngFor="let tag of defaultTags" outline color="secondary">
+        <ion-label>{{tag.value}}</ion-label>
+        <ion-icon name="close-circle"></ion-icon>
+      </ion-chip>
+      <!-- <ion-chip outline color="secondary">
         <ion-label>House</ion-label>
         <ion-icon name="close-circle"></ion-icon>
       </ion-chip>
@@ -51,7 +55,7 @@
       <ion-chip outline color="secondary">
         <ion-label>Rave</ion-label>
         <ion-icon name="close-circle"></ion-icon>
-      </ion-chip>
+      </ion-chip> -->
     </p>
 
     <div class="form-group col-12 image">

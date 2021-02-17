@@ -3,17 +3,13 @@ import { AngularFirestore } from "@angular/fire/firestore";
 import { AngularFireStorage } from "@angular/fire/storage";
 import { Router } from "@angular/router";
 import { ModalController } from "@ionic/angular";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { finalize } from "rxjs/operators";
+import { Tag } from "src/app/shared/models/tag";
 import { User } from "src/app/shared/models/user";
 import { AuthenticationService } from "src/app/shared/services/authentication.service";
 import { ModalService } from "src/app/shared/services/modal.service";
 import { PostsService } from "src/app/shared/services/posts.service";
-
-export interface Image {
-  id: string;
-  image: string;
-}
 
 @Component({
   selector: "app-post-modal",
@@ -21,20 +17,22 @@ export interface Image {
   styleUrls: ["./post-modal.component.scss"],
 })
 export class PostModalComponent implements OnInit {
-  // title = "cloudsSorage";
-  // selectedFile: File = null;
   user: User;
   inputValue: string = "";
-  imageURLS: Array<any> = [];
+  imageURLS: Array<string> = [];
   downloadURL: Observable<string>;
-  // display$: Observable<boolean>;
-
-  // url: any;
-  // newImage: Image = {
-  //   id: this.afs.createId(),
-  //   image: "",
-  // };
-  // loading: boolean = false;
+  tags: Array<Tag> = [];
+  defaultTags: Array<Tag> = [
+    {
+      value: "House",
+    },
+    {
+      value: "Techno",
+    },
+    {
+      value: "Rave",
+    },
+  ];
 
   constructor(
     private firestore: AngularFirestore,
@@ -46,15 +44,15 @@ export class PostModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getUserInfo();
+    this.getUser();
   }
 
-  getUserInfo() {
+  getUser() {
     this.authService
-      .getUserInfo()
-      .then((user) => {
-        console.log(user);
+      .getUserData()
+      .then((user: User) => {
         this.user = user;
+        console.log(this.user);
       })
       .catch((error) => {
         console.log(error);
@@ -89,10 +87,10 @@ export class PostModalComponent implements OnInit {
 
   addPost() {
     this.postsService
-      .addPost(this.imageURLS, this.user, this.inputValue)
+      .addPost(this.imageURLS, this.user, this.inputValue, this.defaultTags)
       .then((data: any) => {
         console.log(data);
-        this.postsService.triggerPostResult(true);
+        // this.postsService.triggerPostResult(true);
         this.close();
       })
       .catch((error: any) => {

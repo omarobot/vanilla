@@ -8,6 +8,7 @@ import {
   AngularFirestoreDocument,
 } from "@angular/fire/firestore";
 import { Observable, Subject } from "rxjs";
+import { first } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -15,6 +16,9 @@ import { Observable, Subject } from "rxjs";
 export class AuthenticationService {
   public userData: any;
   public redirectResult: Subject<any> = new Subject<any>();
+  // public setUserResult: Subject<User> = new Subject<User>();
+  // public unsetUserResult: Subject<void> = new Subject<void>();
+  public userIsLoaded: boolean;
 
   constructor(
     public afStore: AngularFirestore,
@@ -29,9 +33,11 @@ export class AuthenticationService {
         this.userData = user;
         localStorage.setItem("user", JSON.stringify(this.userData));
         JSON.parse(localStorage.getItem("user"));
+        // this.setUserResult.next(this.userData);
       } else {
         localStorage.setItem("user", null);
         JSON.parse(localStorage.getItem("user"));
+        // this.unsetUserResult.next();
       }
     });
   }
@@ -114,6 +120,16 @@ export class AuthenticationService {
       });
   }
 
+  // // Used to notify components when user has logged in
+  // getSetUserResult(): Observable<User> {
+  //   return this.setUserResult.asObservable();
+  // }
+
+  // // Used to notify components when user has logged off
+  // getUnsetUserResult(): Observable<void> {
+  //   return this.unsetUserResult.asObservable();
+  // }
+
   getRedirectResult(): Observable<any> {
     return this.redirectResult.asObservable();
   }
@@ -147,9 +163,52 @@ export class AuthenticationService {
     });
   }
 
-  getUserInfo(): Promise<User> {
+  getUserData(): Promise<User> {
     return this.ngFireAuth.currentUser;
   }
+
+  getCurrentUser() {
+    return new Promise((resolve, reject) => {
+      const currentUser = firebase.auth().currentUser;
+      if (currentUser) resolve(currentUser);
+      else {
+        const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+          unsubscribe();
+          resolve(user);
+        }, reject);
+      }
+    });
+  }
+
+  public async getUser(): Promise<any> {
+    return await this.ngFireAuth.authState.pipe(first()).toPromise();
+  }
+
+  firstFunction() {
+    return new Promise((resolve, reject) => {
+      let y = 0;
+      setTimeout(() => {
+        for (let i = 0; i < 10; i++) {
+          y++;
+        }
+        console.log("loop completed");
+        resolve(y);
+      }, 2000);
+    });
+  }
+
+  // getCurrentUser() {
+  //   return new Promise((resolve, reject) => {
+  //      if (this.userIsLoaded) {
+  //           resolve(firebase.auth().currentUser);
+  //      }
+  //      const unsubscribe = this.ngFireAuth.onAuthStateChanged(user => {
+  //         this.userIsLoaded = true;
+  //         unsubscribe();
+  //         resolve(user);
+  //      }, reject);
+  //   });
+  // }
 
   // refreshToken() {
   //   console.log(firebase.auth().currentUser.emailVerified);
