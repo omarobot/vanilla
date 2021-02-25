@@ -7,8 +7,11 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button (click)="addPost()" [disabled]="canPost()">
+      <ion-button *ngIf="newPost" (click)="addPost()" [disabled]="canPost()">
         Post
+      </ion-button>
+      <ion-button *ngIf="!newPost" (click)="editPost()" [disabled]="canPost()">
+        Done
       </ion-button>
     </ion-buttons>
     <ion-title>Add Post</ion-title>
@@ -30,7 +33,7 @@
     </ion-item>
     <!-- <br> -->
     <ion-textarea style="padding-left: 10px; padding-right: 10px" placeholder="What's good..." rows="5"
-      (ionChange)="inputChange($event)">
+      [value]="inputValue" (ionChange)="inputChange($event)">
     </ion-textarea>
 
     <ion-textarea style="padding-left: 10px; padding-right: 10px" placeholder="Add tags" rows="1">
@@ -40,57 +43,39 @@
         <ion-label>{{tag.value}}</ion-label>
         <ion-icon name="close-circle"></ion-icon>
       </ion-chip>
-      <!-- <ion-chip outline color="secondary">
-        <ion-label>House</ion-label>
-        <ion-icon name="close-circle"></ion-icon>
-      </ion-chip>
-      <ion-chip outline color="secondary">
-        <ion-label>Techno</ion-label>
-        <ion-icon name="close-circle"></ion-icon>
-      </ion-chip>
-      <ion-chip outline color="secondary">
-        <ion-label>Hip Hop</ion-label>
-        <ion-icon name="close-circle"></ion-icon>
-      </ion-chip>
-      <ion-chip outline color="secondary">
-        <ion-label>Rave</ion-label>
-        <ion-icon name="close-circle"></ion-icon>
-      </ion-chip> -->
+
     </p>
 
     <div class="form-group col-12 image">
-      <input type="file" id="file" #userPhoto (change)="onFileSelected($event)" name="image" autocomplete="off" />
+      <input class="display:none" type="file" id="file" #userPhoto (change)="onFileSelected($event)" name="image"
+        autocomplete="off" />
     </div>
-    <div *ngIf="imageURLS.length > 0" class="list">
+    <!-- <div *ngIf="imageURLS.length > 0">
       <img *ngFor="let image of imageURLS" src="{{ image }}" alt="" />
+    </div> -->
+    <div class="pins2">
+      <ion-card class="pin2" *ngFor="let image of imageURLS; let i = index">
+        <img src="{{ image }}" alt="" />
+        <span class="close-icon" (click)="deleteImage(i)">
+          <ion-icon name="close-outline"></ion-icon>
+        </span>
+      </ion-card>
     </div>
 
   </ion-header>
-
-  <!-- <div class="box">
-    <div class="preview">
-      <img [src]="url" alt="">
-    </div>
-    <div class="uploadbtn">
-      <label>
-        <input (change)="uploadImage($event)" type="file" class="image-upload" accept="image/*">
-      </label>
-    </div>
-  </div> -->
-
 </ion-content>
 
 <ion-footer>
   <ion-tab-bar>
-    <ion-tab-button>
+    <ion-tab-button (click)="openFile($event)">
       <ion-icon name="image-outline" color="primary"></ion-icon>
       <ion-label>Image</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button>
+    <!-- <ion-tab-button>
       <ion-icon name="film-outline" color="primary"></ion-icon>
       <ion-label>Video</ion-label>
-    </ion-tab-button>
+    </ion-tab-button> -->
 
     <ion-tab-button>
       <ion-icon name="location-outline" color="primary"></ion-icon>

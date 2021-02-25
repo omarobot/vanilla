@@ -1,0 +1,5 @@
+<ion-button fill="clear" size="small" color="dark" (click)="click()">
+    <ion-icon *ngIf="liked" slot="start" name="heart" color="secondary"></ion-icon>
+    <ion-icon *ngIf="!liked" slot="start" name="heart-outline" color="medium"></ion-icon>
+    <ion-label> {{ post.likeCount }}</ion-label>
+</ion-button>

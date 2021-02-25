@@ -34,11 +34,11 @@ export class FeedPage implements OnInit {
   }
 
   ngOnInit() {
-    // this.postResult = this.postsService.getPostResult().subscribe((data) => {
-    //   if (data) {
-    //     this.getPosts();
-    //   }
-    // });
+    this.postResult = this.postsService.getPostResult().subscribe((data) => {
+      if (data) {
+        this.getPosts();
+      }
+    });
 
     this.getUserData();
 
@@ -73,37 +73,65 @@ export class FeedPage implements OnInit {
   async presentActionSheet(post: Post) {
     let buttons = [];
     if (post.uid && post.uid === this.user.uid) {
-      buttons.push({
-        text: "Delete",
-        role: "destructive",
-        icon: "trash",
-        handler: () => {
-          this.postsService
-            .deletePost(post)
-            .then((data) => {
-              console.log(data);
-            })
-            .catch((data) => {
-              console.log(data);
+      buttons.push(
+        {
+          text: "Edit",
+          // icon: "trash",
+          handler: () => {
+            this.router.navigate(["/home/post"], {
+              queryParams: { id: post.postId },
             });
+          },
         },
-      });
+        {
+          text: "Delete",
+          role: "destructive",
+          // icon: "trash",
+          handler: () => {
+            this.postsService
+              .deletePost(post)
+              .then((data) => {
+                console.log(data);
+              })
+              .catch((data) => {
+                console.log(data);
+              });
+          },
+        }
+      );
     }
 
-    buttons.push({
-      text: "Cancel",
-      icon: "close",
-      role: "cancel",
-      handler: () => {
-        console.log("Cancel clicked");
+    buttons.push(
+      {
+        text: "Share",
+        // icon: "share",
+        handler: () => {
+          console.log("Share clicked");
+        },
       },
-    });
+      {
+        text: "Cancel",
+        icon: "close",
+        role: "cancel",
+        handler: () => {
+          console.log("Cancel clicked");
+        },
+      }
+    );
 
     const actionSheet = await this.actionSheetController.create({
       header: "Options",
-      cssClass: "my-custom-class",
+      // cssClass: "my-custom-class",
       buttons: buttons,
     });
     await actionSheet.present();
+  }
+
+  likeEvent(event: { like: boolean; post: Post }) {
+    if (event.like) {
+      event.post.likeCount++;
+    } else {
+      event.post.likeCount--;
+    }
   }
 }

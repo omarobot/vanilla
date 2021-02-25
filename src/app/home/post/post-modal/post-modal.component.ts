@@ -1,10 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { AngularFireStorage } from "@angular/fire/storage";
 import { Router } from "@angular/router";
 import { ModalController } from "@ionic/angular";
 import { Observable, Subscription } from "rxjs";
 import { finalize } from "rxjs/operators";
+import { Post } from "src/app/shared/models/post";
 import { Tag } from "src/app/shared/models/tag";
 import { User } from "src/app/shared/models/user";
 import { AuthenticationService } from "src/app/shared/services/authentication.service";
@@ -17,21 +18,25 @@ import { PostsService } from "src/app/shared/services/posts.service";
   styleUrls: ["./post-modal.component.scss"],
 })
 export class PostModalComponent implements OnInit {
+  @Input() id: any;
   user: User;
+  newPost: boolean = true;
+  oldPost: Post;
   inputValue: string = "";
   imageURLS: Array<string> = [];
+  deletedImages: Array<string> = [];
   downloadURL: Observable<string>;
   tags: Array<Tag> = [];
   defaultTags: Array<Tag> = [
     {
-      value: "House",
+      value: "#whiskey",
     },
     {
-      value: "Techno",
+      value: "#beach",
     },
-    {
-      value: "Rave",
-    },
+    // {
+    //   value: "Rave",
+    // },
   ];
 
   constructor(
@@ -44,6 +49,10 @@ export class PostModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    if (this.id) {
+      this.newPost = false;
+      this.getPost();
+    }
     this.getUser();
   }
 
@@ -52,11 +61,29 @@ export class PostModalComponent implements OnInit {
       .getUserData()
       .then((user: User) => {
         this.user = user;
-        console.log(this.user);
       })
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  getPost() {
+    this.postsService.getPost(this.id).subscribe(
+      (data) => {
+        console.log(data);
+        this.oldPost = data;
+        this.inputValue = this.oldPost.content;
+        this.imageURLS = this.oldPost.images;
+        this.tags = this.oldPost.tags;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  openFile() {
+    document.querySelector("input").click();
   }
 
   onFileSelected(event) {
@@ -90,12 +117,63 @@ export class PostModalComponent implements OnInit {
       .addPost(this.imageURLS, this.user, this.inputValue, this.defaultTags)
       .then((data: any) => {
         console.log(data);
-        // this.postsService.triggerPostResult(true);
-        this.close();
+        this.postsService.triggerPostResult(true);
+        this.router.navigate(["home"]);
+        this.modalService.close();
       })
       .catch((error: any) => {
         console.log(error);
       });
+  }
+
+  editPost() {
+    console.log("Setting edited post...");
+
+    let post: Partial<Post> = {};
+    post.postId = this.oldPost.postId;
+    //TODO: Add for TAGS
+    if (this.deletedImages.length > 0) {
+      // delete images first
+      this.postsService
+        .deleteImages(this.deletedImages)
+        .then((data) => {
+          console.log(data);
+          post.images = this.imageURLS;
+          if (this.oldPost.content !== this.inputValue) {
+            // only change content if it was changed
+            post.content = this.inputValue;
+          }
+          this.setEditedPost(post);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      post.content = this.inputValue;
+      this.setEditedPost(post);
+    }
+  }
+
+  setEditedPost(post: Partial<Post>) {
+    this.postsService
+      .editPost(post)
+      .then((data) => {
+        console.log("Edited...");
+        console.log(data);
+        this.router.navigate(["home"]);
+        this.modalService.close();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  deleteImage(index: number) {
+    this.deletedImages = [
+      ...this.deletedImages,
+      ...this.imageURLS.splice(index, 1),
+    ];
+    console.log(this.deletedImages);
   }
 
   inputChange(input) {
@@ -109,6 +187,16 @@ export class PostModalComponent implements OnInit {
   }
 
   close() {
+    if (this.deletedImages.length > 0) {
+      this.postsService
+        .deleteImages(this.deletedImages)
+        .then((data) => {
+          console.log("Deleted images and cancelling");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
     this.router.navigate(["home"]);
     this.modalService.close();
   }

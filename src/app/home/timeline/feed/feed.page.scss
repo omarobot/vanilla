@@ -18,22 +18,39 @@
   max-height: 100vh !important;
 }
 
+.display-name {
+  font-weight: 400;
+}
+
+.location-header {
+  font-size: 13px;
+  color: var(--ion-color-tertiary);
+}
+
 ion-card {
   margin: 0px 0px 15px 0px !important;
   width: 100% !important;
 
   .post-content {
-    padding-left: 5px;
+    // padding-left: 5px;
+    font-size: 14px;
   }
 
-  p {
-    padding-top: 5px;
+  .post-time {
+    font-size: 12px;
+  }
 
-    ion-badge {
-      margin-right: 3px;
-      font-weight: 400;
+  ion-card-content {
+    p {
+      padding-top: 5px;
+
+      ion-badge {
+        margin-right: 3px;
+        font-weight: 400;
+      }
     }
   }
+
 
 
 }

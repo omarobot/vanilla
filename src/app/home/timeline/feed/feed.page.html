@@ -7,13 +7,14 @@
         <img *ngIf="!post.profileImage" src="./assets/avatar.svg">
       </ion-avatar>
       <ion-label>
-        <h3>{{post?.displayName}}</h3>
-        <p>{{timeHelper.getRelativeTime(post.timeStamp)}}</p>
+        <h3 class="display-name">{{post?.displayName}}</h3>
+        <p class="location-header">
+          <ion-icon name="location-outline"></ion-icon> {{post?.location}}
+        </p>
+        <!-- <p>{{timeHelper.getRelativeTime(post.timeStamp)}}</p> -->
       </ion-label>
       <ion-button slot="end" fill="clear" size="small" color="dark" (click)="presentActionSheet(post)">
         <ion-icon slot="end" name="ellipsis-horizontal-outline" color="dark"></ion-icon>
-        <!-- <ion-badge color="danger">2.3k</ion-badge> -->
-        <!-- <ion-label> DELETE</ion-label> -->
       </ion-button>
     </ion-item>
     <ion-slides *ngIf="post.images && post.images.length > 0" pager>
@@ -22,26 +23,16 @@
         </ion-slide>
       </ng-container>
     </ion-slides>
-    <!-- <ion-slides *ngIf="post.images && post.images.length > 0" pager>
-      <ng-container *ngFor="let url of  post.images | slice:1; let i = index">
-        <p>{{url}}</p>
-        <ion-slide [ngStyle]="{'background' : 'url(' + url + ')'}">
-        </ion-slide>
-      </ng-container>
-    </ion-slides> -->
 
     <ion-card-content>
-      <ion-card-title color="tertiary">
-        <h3 class="main_header4">
-          <ion-icon name="location-outline"></ion-icon> {{post?.location}}
-        </h3>
-      </ion-card-title>
       <p class="post-content">
         {{post?.content}}
       </p>
       <p *ngIf="post.tags && post.tags.length > 0">
         <ion-badge *ngFor="let tag of post.tags" color="secondary">{{tag.value}}</ion-badge>
       </p>
+      <p class="post-time">{{timeHelper.getRelativeTime(post.timeStamp)}}</p>
+
 
     </ion-card-content>
 
@@ -49,39 +40,23 @@
       <ion-col>
         <ion-button fill="clear" size="small" color="dark">
           <ion-icon slot="start" name="chatbox-ellipses-outline" color="medium"></ion-icon>
-          <!-- <ion-badge color="danger">2.3k</ion-badge> -->
           <ion-label> {{post?.commentCount}}</ion-label>
         </ion-button>
-
-        <ion-button fill="clear" size="small" color="dark">
+        <app-like-button [post]="post" (likeEvent)="likeEvent($event)"></app-like-button>
+        <!-- <ion-button fill="clear" size="small" color="dark">
           <ion-icon slot="start" name="heart-outline" color="medium"></ion-icon>
-          <!-- <ion-badge color="danger">2.3k</ion-badge> -->
           <ion-label> {{post?.likeCount}}</ion-label>
-        </ion-button>
-        <!-- <ion-button fill="clear" size="small" color="dark">
-                  <ion-icon slot="start" name="ios-chatboxes" color="gray"></ion-icon>
-                  {{feed.comment}}
-                </ion-button> -->
-        <!-- <ion-button fill="clear" size="small" color="dark">
-                    <ion-icon slot="start" name="ios-heart" color="gray"></ion-icon>
-                    {{feed.like}}
-                </ion-button> -->
+        </ion-button> -->
       </ion-col>
 
       <ion-col center class="ion-text-right">
         <ion-button fill="clear" size="small" color="dark">
           <ion-icon slot="start" name="arrow-redo-outline" color="medium"></ion-icon>
-          <!-- <ion-badge color="danger">2.3k</ion-badge> -->
           <ion-label> REPLY</ion-label>
         </ion-button>
-        <!-- <ion-button fill="clear" size="small" color="dark">
-                      REPLY
-                  </ion-button> -->
       </ion-col>
     </ion-row>
 
   </ion-card>
 
 </ion-grid>
-
-<!--  hide ion-tab-bar -->

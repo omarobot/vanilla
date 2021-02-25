@@ -36,6 +36,12 @@ const routes: Routes = [
           import("./post/post.module").then((m) => m.PostPageModule),
       },
       {
+        path: "post/:id",
+        canActivate: [OpenModalGuard],
+        loadChildren: () =>
+          import("./post/post.module").then((m) => m.PostPageModule),
+      },
+      {
         path: "interactions",
         loadChildren: () =>
           import("./interactions/interactions.module").then(

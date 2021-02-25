@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
 import {
   BrowserModule,
   BrowserTransferStateModule,
@@ -30,7 +30,6 @@ import { ComponentsModule } from "./components/components.module";
 import { PostModalComponent } from "./home/post/post-modal/post-modal.component";
 import { OpenModalGuard } from "./shared/guards/open-modal.guard";
 import { PrivacyPolicyPage } from "./privacy-policy/privacy-policy.page";
-import { MenuComponent } from "./shared/components/menu/menu.component";
 import { TermsOfServicePage } from "./terms-of-service/terms-of-service.page";
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -39,9 +38,9 @@ import { TranslateModule } from "@ngx-translate/core";
     AppComponent,
     PostModalComponent,
     PrivacyPolicyPage,
-    MenuComponent,
     TermsOfServicePage,
   ],
+  exports: [],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -63,5 +62,6 @@ import { TranslateModule } from "@ngx-translate/core";
     OpenModalGuard,
   ],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

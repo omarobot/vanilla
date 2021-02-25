@@ -4,16 +4,18 @@ import { Observable, Subject } from "rxjs";
   providedIn: "root",
 })
 export class ModalService {
-  private display: Subject<boolean> = new Subject<boolean>();
-  watch(): Observable<boolean> {
+  private display: Subject<{ open: boolean; id: string }> = new Subject<{
+    open: boolean;
+    id: any;
+  }>();
+  watch(): Observable<{ open: boolean; id: string }> {
     return this.display.asObservable();
   }
-  open() {
-    this.display.next(true);
+  open(id: any) {
+    this.display.next({ open: true, id: id });
   }
   close() {
     console.log("closing...");
-
-    this.display.next(false);
+    this.display.next({ open: false, id: null });
   }
 }

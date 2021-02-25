@@ -8,7 +8,7 @@ import { User } from "../models/user";
   providedIn: "root",
 })
 export class LocationService {
-  _location: string = "Havana, Cuba";
+  _location: string = "Los Angeles, CA";
 
   constructor(private firestore: AngularFirestore) {}
 

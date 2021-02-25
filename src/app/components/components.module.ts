@@ -11,6 +11,7 @@ import { CountdownTimerComponent } from "./countdown-timer/countdown-timer.compo
 import { CounterInputComponent } from "./counter-input/counter-input.component";
 import { RatingInputComponent } from "./rating-input/rating-input.component";
 import { GoogleMapComponent } from "./google-map/google-map.component";
+import { LikeButtonComponent } from "./like-button/like-button.component";
 
 @NgModule({
   imports: [CommonModule, FormsModule, ShellModule, IonicModule],
@@ -21,6 +22,7 @@ import { GoogleMapComponent } from "./google-map/google-map.component";
     CounterInputComponent,
     RatingInputComponent,
     GoogleMapComponent,
+    LikeButtonComponent,
   ],
   exports: [
     ShellModule,
@@ -30,6 +32,7 @@ import { GoogleMapComponent } from "./google-map/google-map.component";
     CounterInputComponent,
     RatingInputComponent,
     GoogleMapComponent,
+    LikeButtonComponent,
   ],
 })
 export class ComponentsModule {}

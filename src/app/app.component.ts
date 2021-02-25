@@ -15,7 +15,7 @@ import { AuthenticationService } from "./shared/services/authentication.service"
   styleUrls: ["app.component.scss"],
 })
 export class AppComponent implements OnInit {
-  display$: Observable<boolean>;
+  display$: Observable<{ open: boolean; id: string }>;
 
   //**************************************//
   //********** UI layout pages **********//
@@ -76,19 +76,17 @@ export class AppComponent implements OnInit {
     private statusBar: StatusBar,
     public modalController: ModalController,
     public modalService: ModalService,
-    public authService: AuthenticationService
-  ) // public translate: TranslateService
-  {
+    public authService: AuthenticationService // public translate: TranslateService
+  ) {
     this.initializeApp();
     // this.setLanguage();
   }
 
   ngOnInit() {
     this.display$ = this.modalService.watch();
-    this.display$.subscribe((val: any) => {
-      console.log("Modal change..." + val);
-      if (val) {
-        this.presentModal();
+    this.display$.subscribe((data: any) => {
+      if (data.open) {
+        this.presentModal(data.id);
       } else {
         this.modalController.dismiss({
           dismissed: true,
@@ -97,10 +95,11 @@ export class AppComponent implements OnInit {
     });
   }
 
-  async presentModal() {
+  async presentModal(id: string) {
     const modal = await this.modalController.create({
       component: PostModalComponent,
       cssClass: "my-custom-class",
+      componentProps: { id: id },
     });
     return await modal.present();
   }
