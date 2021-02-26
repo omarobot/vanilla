@@ -13,4 +13,5 @@ export class Post {
   images?: Array<string>;
   timeStamp: number;
   tags?: Array<Tag>;
+  userLikes?: Array<string>;
 }

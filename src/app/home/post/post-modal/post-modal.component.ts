@@ -24,16 +24,18 @@ export class PostModalComponent implements OnInit {
   oldPost: Post;
   inputValue: string = "";
   imageURLS: Array<string> = [];
+  imageUploadProgress: Array<number> = [];
+  disablePost: boolean = false;
   deletedImages: Array<string> = [];
   downloadURL: Observable<string>;
   tags: Array<Tag> = [];
   defaultTags: Array<Tag> = [
-    {
-      value: "#whiskey",
-    },
-    {
-      value: "#beach",
-    },
+    // {
+    //   value: "#whiskey",
+    // },
+    // {
+    //   value: "#beach",
+    // },
     // {
     //   value: "Rave",
     // },
@@ -73,8 +75,8 @@ export class PostModalComponent implements OnInit {
         console.log(data);
         this.oldPost = data;
         this.inputValue = this.oldPost.content;
-        this.imageURLS = this.oldPost.images;
-        this.tags = this.oldPost.tags;
+        this.imageURLS = [...this.oldPost.images];
+        this.tags = [...this.oldPost.tags];
       },
       (error) => {
         console.log(error);
@@ -87,6 +89,9 @@ export class PostModalComponent implements OnInit {
   }
 
   onFileSelected(event) {
+    this.disablePost = true;
+    this.imageUploadProgress.push(0);
+    let progressIndex = this.imageUploadProgress.length - 1;
     var n = Date.now();
     const file = event.target.files[0];
     const filePath = `profile_pics/${n}`;
@@ -102,14 +107,23 @@ export class PostModalComponent implements OnInit {
               this.imageURLS.push(url);
             }
             console.log(this.imageURLS[this.imageURLS.length - 1]);
+            this.disablePost = false;
           });
         })
       )
-      .subscribe((url) => {
-        if (url) {
-          console.log(url);
+      .subscribe(
+        (url) => {
+          console.log(url.bytesTransferred + "/" + url.totalBytes);
+          let percentage = url.bytesTransferred / url.totalBytes;
+          this.imageUploadProgress[progressIndex] = percentage;
+          if (percentage === 1) {
+            this.imageUploadProgress.splice(progressIndex, 1);
+          }
+        },
+        (error) => {
+          this.disablePost = false;
         }
-      });
+      );
   }
 
   addPost() {
@@ -118,8 +132,7 @@ export class PostModalComponent implements OnInit {
       .then((data: any) => {
         console.log(data);
         this.postsService.triggerPostResult(true);
-        this.router.navigate(["home"]);
-        this.modalService.close();
+        this.close();
       })
       .catch((error: any) => {
         console.log(error);
@@ -150,6 +163,10 @@ export class PostModalComponent implements OnInit {
         });
     } else {
       post.content = this.inputValue;
+      if (this.oldPost.images.length != this.imageURLS.length) {
+        // User added images
+        post.images = this.imageURLS;
+      }
       this.setEditedPost(post);
     }
   }
@@ -181,7 +198,9 @@ export class PostModalComponent implements OnInit {
   }
 
   canPost() {
-    return !(this.inputValue.length > 0 || this.imageURLS.length > 0
+    return !(this.inputValue.length > 0 ||
+    this.imageURLS.length > 0 ||
+    !this.disablePost
       ? true
       : false);
   }
@@ -191,7 +210,7 @@ export class PostModalComponent implements OnInit {
       this.postsService
         .deleteImages(this.deletedImages)
         .then((data) => {
-          console.log("Deleted images and cancelling");
+          console.log("Deleted images");
         })
         .catch((error) => {
           console.log(error);

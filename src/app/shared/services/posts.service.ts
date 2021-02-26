@@ -70,6 +70,7 @@ export class PostsService {
       images: images,
       profileImage: user.photoURL,
       tags: tags,
+      userLikes: [],
     };
 
     return this.firestore.collection("posts").add(post);
@@ -81,6 +82,10 @@ export class PostsService {
 
   deletePost(post: Post) {
     return this.firestore.collection("posts").doc(post.postId).delete();
+  }
+
+  updateLikeCount(post: Partial<Post>) {
+    return this.firestore.collection("posts").doc(post.postId).update(post);
   }
 
   deleteImages(urls: Array<string>): Promise<any> {

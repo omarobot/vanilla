@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { Post } from "../../shared/models/post";
-import { PostService } from "../../shared/services/post.service";
 import { ModalController } from "@ionic/angular";
 import { LocationFormPage } from "./location/location-form.page";
 import { PostsService } from "src/app/shared/services/posts.service";
@@ -16,7 +15,6 @@ export class TimelinePage implements OnInit {
   private location: string;
 
   constructor(
-    private postService: PostService,
     private locationService: LocationService,
     public modalController: ModalController
   ) {}

@@ -4,7 +4,6 @@ import { Router } from "@angular/router";
 import { LoadingController, MenuController } from "@ionic/angular";
 import { Subscription } from "rxjs";
 import { AuthenticationService } from "../shared/services/authentication.service";
-import { PostService } from "../shared/services/post.service";
 
 @Component({
   selector: "app-login",
@@ -34,7 +33,6 @@ export class LoginPage implements OnInit {
   constructor(
     public router: Router,
     public menu: MenuController,
-    public service: PostService,
     public authService: AuthenticationService,
     public loadingController: LoadingController,
     private ngZone: NgZone
@@ -66,15 +64,7 @@ export class LoginPage implements OnInit {
       });
   }
 
-  ngOnInit() {
-    this.getUser();
-  }
-
-  getUser() {
-    this.service.getUser().subscribe((data: any) => {
-      console.log(data);
-    });
-  }
+  ngOnInit() {}
 
   // Disable side menu for this page
   ionViewDidEnter(): void {

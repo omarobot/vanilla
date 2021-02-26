@@ -42,7 +42,7 @@
           <ion-icon slot="start" name="chatbox-ellipses-outline" color="medium"></ion-icon>
           <ion-label> {{post?.commentCount}}</ion-label>
         </ion-button>
-        <app-like-button [post]="post" (likeEvent)="likeEvent($event)"></app-like-button>
+        <app-like-button [post]="post" [uid]="user.uid" (likeEvent)="likeEvent($event)"></app-like-button>
         <!-- <ion-button fill="clear" size="small" color="dark">
           <ion-icon slot="start" name="heart-outline" color="medium"></ion-icon>
           <ion-label> {{post?.likeCount}}</ion-label>

@@ -7,6 +7,7 @@ import { Post } from "../../shared/models/post";
 })
 export class LikeButtonComponent implements OnInit {
   liked: boolean = false;
+  @Input() uid: string;
   @Input() post: Post;
   @Output() likeEvent: EventEmitter<{
     like: boolean;
@@ -15,23 +16,26 @@ export class LikeButtonComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.post.userLikes && this.post.userLikes.includes(this.uid)) {
+      this.liked = true;
+    }
+  }
 
   click() {
+    this.liked = !this.liked;
     if (this.liked) {
-      this.unlike();
-    } else {
       this.like();
+    } else {
+      this.unlike();
     }
   }
 
   like() {
-    this.liked = true;
     this.likeEvent.emit({ like: true, post: this.post });
   }
 
   unlike() {
-    this.liked = false;
     this.likeEvent.emit({ like: false, post: this.post });
   }
 }
