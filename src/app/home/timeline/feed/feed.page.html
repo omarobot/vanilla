@@ -1,24 +1,89 @@
 <!-- <ion-content #content> -->
-<ion-grid fixed class="ion-no-padding">
-  <ion-card mode="ios" *ngFor="let post of posts">
+<!-- <ion-grid fixed class="ion-no-padding">
+
+  <ng-container *ngIf="loaded; else feedLoading;">
+    <ion-card mode="ios" *ngFor="let post of (items$ | async);">
+      <ion-item lines="none">
+        <ion-avatar slot="start">
+          <img *ngIf="post.post.profileImage" [src]="post?.post.profileImage">
+          <img *ngIf="!post.post.profileImage" src="./assets/avatar.svg">
+        </ion-avatar>
+        <ion-label>
+          <h3 class="display-name">{{post?.post.displayName}}</h3>
+          <p class="location-header">
+            <ion-icon name="location-outline"></ion-icon> {{post?.post.location}}
+          </p>
+        </ion-label>
+        <ion-button slot="end" fill="clear" size="small" color="dark" (click)="presentActionSheet(post)">
+          <ion-icon slot="end" name="ellipsis-horizontal-outline" color="dark"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-slides *ngIf="post.post.images && post.post.images.length > 0" pager>
+        <ng-container *ngFor="let url of  post.post.images">
+          <ion-slide [ngStyle]="{'background' : 'url(' + url + ')'}">
+          </ion-slide>
+        </ng-container>
+      </ion-slides>
+
+      <ion-card-content>
+        <p class="post-content">
+          {{post?.post.content}}
+        </p>
+        <p *ngIf="post.post.tags && post.post.tags.length > 0">
+          <ion-badge *ngFor="let tag of post.post.tags" color="secondary">{{tag.value}}</ion-badge>
+        </p>
+        <p class="post-time">{{timeHelper.getRelativeTime(post.post.timeStamp)}}</p>
+
+
+      </ion-card-content>
+
+      <ion-row>
+        <ion-col>
+          <ion-button fill="clear" size="small" color="dark">
+            <ion-icon slot="start" name="chatbox-ellipses-outline" color="medium"></ion-icon>
+            <ion-label> {{post?.post.commentCount}}</ion-label>
+          </ion-button>
+          <app-like-button [post]="post" [uid]="user.uid" (likeEvent)="likeEvent($event)"></app-like-button>
+        </ion-col>
+
+        <ion-col center class="ion-text-right">
+          <ion-button fill="clear" size="small" color="dark">
+            <ion-icon slot="start" name="arrow-redo-outline" color="medium"></ion-icon>
+            <ion-label> REPLY</ion-label>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ion-card>
+  </ng-container>
+
+  <ng-template #feedLoading>
+    <main>
+      Initializing your feed...
+    </main>
+  </ng-template>
+
+</ion-grid> -->
+
+<ng-container *ngIf="loaded; else feedLoading;">
+  <ion-card *ngFor="let post of (items$ | async);">
     <ion-item lines="none">
       <ion-avatar slot="start">
-        <img *ngIf="post.profileImage" [src]="post?.profileImage">
-        <img *ngIf="!post.profileImage" src="./assets/avatar.svg">
+        <img *ngIf="post.post.profileImage" [src]="post?.post.profileImage">
+        <img *ngIf="!post.post.profileImage" src="./assets/avatar.svg">
       </ion-avatar>
       <ion-label>
-        <h3 class="display-name">{{post?.displayName}}</h3>
+        <h3 class="display-name">{{post?.post.displayName}}</h3>
         <p class="location-header">
-          <ion-icon name="location-outline"></ion-icon> {{post?.location}}
+          <ion-icon name="location-outline"></ion-icon> {{post?.post.location}}
         </p>
-        <!-- <p>{{timeHelper.getRelativeTime(post.timeStamp)}}</p> -->
       </ion-label>
       <ion-button slot="end" fill="clear" size="small" color="dark" (click)="presentActionSheet(post)">
         <ion-icon slot="end" name="ellipsis-horizontal-outline" color="dark"></ion-icon>
       </ion-button>
     </ion-item>
-    <ion-slides *ngIf="post.images && post.images.length > 0" pager>
-      <ng-container *ngFor="let url of  post.images">
+    <ion-slides *ngIf="post.post.images && post.post.images.length > 0" pager>
+      <ng-container *ngFor="let url of  post.post.images">
         <ion-slide [ngStyle]="{'background' : 'url(' + url + ')'}">
         </ion-slide>
       </ng-container>
@@ -26,12 +91,12 @@
 
     <ion-card-content>
       <p class="post-content">
-        {{post?.content}}
+        {{post?.post.content}}
       </p>
-      <p *ngIf="post.tags && post.tags.length > 0">
-        <ion-badge *ngFor="let tag of post.tags" color="secondary">{{tag.value}}</ion-badge>
+      <p *ngIf="post.post.tags && post.post.tags.length > 0">
+        <ion-badge *ngFor="let tag of post.post.tags" color="secondary">{{tag.value}}</ion-badge>
       </p>
-      <p class="post-time">{{timeHelper.getRelativeTime(post.timeStamp)}}</p>
+      <p class="post-time">{{timeHelper.getRelativeTime(post.post.timeStamp)}}</p>
 
 
     </ion-card-content>
@@ -40,13 +105,9 @@
       <ion-col>
         <ion-button fill="clear" size="small" color="dark">
           <ion-icon slot="start" name="chatbox-ellipses-outline" color="medium"></ion-icon>
-          <ion-label> {{post?.commentCount}}</ion-label>
+          <ion-label> {{post?.post.commentCount}}</ion-label>
         </ion-button>
         <app-like-button [post]="post" [uid]="user.uid" (likeEvent)="likeEvent($event)"></app-like-button>
-        <!-- <ion-button fill="clear" size="small" color="dark">
-          <ion-icon slot="start" name="heart-outline" color="medium"></ion-icon>
-          <ion-label> {{post?.likeCount}}</ion-label>
-        </ion-button> -->
       </ion-col>
 
       <ion-col center class="ion-text-right">
@@ -59,4 +120,14 @@
 
   </ion-card>
 
-</ion-grid>
+  <ion-infinite-scroll (ionInfinite)="findNext($event)">
+    <ion-infinite-scroll-content>
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ng-container>
+
+<ng-template #feedLoading>
+  <main>
+    Initializing your feed...
+  </main>
+</ng-template>

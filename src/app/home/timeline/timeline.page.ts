@@ -1,9 +1,14 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { Post } from "../../shared/models/post";
-import { ModalController } from "@ionic/angular";
+import { IonInfiniteScroll, ModalController } from "@ionic/angular";
 import { LocationFormPage } from "./location/location-form.page";
-import { PostsService } from "src/app/shared/services/posts.service";
+import {
+  PostsService,
+  PostWrapper,
+} from "src/app/shared/services/posts.service";
 import { LocationService } from "src/app/shared/services/location.service";
+import { Observable, Subscription } from "rxjs";
+import { filter, take } from "rxjs/operators";
 
 @Component({
   selector: "app-timeline",
@@ -13,13 +18,51 @@ import { LocationService } from "src/app/shared/services/location.service";
 export class TimelinePage implements OnInit {
   // privaposts = [];
   private location: string;
+  public lastVisible: any;
+
+  @ViewChild(IonInfiniteScroll, { static: false })
+  infiniteScroll: IonInfiniteScroll;
+
+  items$: Observable<PostWrapper[]>;
+
+  loaded = false;
+
+  private lastPageReachedSub: Subscription;
 
   constructor(
     private locationService: LocationService,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public postsService: PostsService
   ) {}
 
+  ngOnDestroy() {
+    if (this.lastPageReachedSub) {
+      this.lastPageReachedSub.unsubscribe();
+    }
+  }
+
   ngOnInit() {
+    this.items$ = this.postsService.watchItems();
+
+    this.lastPageReachedSub = this.postsService
+      .watchLastPageReached()
+      .subscribe((reached: boolean) => {
+        if (reached && this.infiniteScroll) {
+          this.loaded = true;
+          this.infiniteScroll.disabled = true;
+        }
+      });
+
+    this.postsService
+      .watchItems()
+      .pipe(
+        filter((flats) => flats !== undefined),
+        take(1)
+      )
+      .subscribe((_items: PostWrapper[]) => {
+        this.loaded = true;
+      });
+
     this.location = this.locationService.location;
     if (!this.location) {
       this.presentModal();
@@ -35,6 +78,26 @@ export class TimelinePage implements OnInit {
     //     this.posts.push(a as Post);
     //   });
     // });
+    this.postsService.find();
+    // this.postsService.paginate("first", null).subscribe(
+    //   (data) => {
+    //     this.lastVisible = data.docs[data.docs.length - 1];
+    //     data.forEach((doc: any) => {
+    //       console.log(doc.data());
+    //       console.log(doc.id);
+    //     });
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );
+  }
+
+  async findNext($event) {
+    setTimeout(async () => {
+      await this.postsService.find();
+      $event.target.complete();
+    }, 500);
   }
 
   async presentModal() {
@@ -43,6 +106,21 @@ export class TimelinePage implements OnInit {
       cssClass: "my-custom-class",
     });
     return await modal.present();
+  }
+
+  loadMore() {
+    this.postsService.paginate("next", this.lastVisible).subscribe(
+      (data) => {
+        this.lastVisible = data.docs[data.docs.length - 1];
+        data.forEach((doc: any) => {
+          console.log(doc.data());
+          console.log(doc.id);
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   // fetchPosts() {

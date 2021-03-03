@@ -1,11 +1,19 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
-import { ActionSheetController, MenuController } from "@ionic/angular";
-import { Subscription } from "rxjs";
+import {
+  ActionSheetController,
+  IonInfiniteScroll,
+  MenuController,
+} from "@ionic/angular";
+import { Observable, Subscription } from "rxjs";
+import { filter, take } from "rxjs/operators";
 import { Post } from "src/app/shared/models/post";
 import { User } from "src/app/shared/models/user";
 import { AuthenticationService } from "src/app/shared/services/authentication.service";
-import { PostsService } from "src/app/shared/services/posts.service";
+import {
+  PostsService,
+  PostWrapper,
+} from "src/app/shared/services/posts.service";
 import { TimeHelperService } from "src/app/shared/utils/time-helper.service";
 
 @Component({
@@ -18,6 +26,15 @@ export class FeedPage implements OnInit {
   public postResult: Subscription; // Used when user adds new post
   public user: User;
 
+  @ViewChild(IonInfiniteScroll, { static: false })
+  infiniteScroll: IonInfiniteScroll;
+
+  items$: Observable<PostWrapper[]>;
+
+  loaded = false;
+
+  private lastPageReachedSub: Subscription;
+
   constructor(
     public menuCtrl: MenuController,
     private postsService: PostsService,
@@ -27,20 +44,49 @@ export class FeedPage implements OnInit {
     public authService: AuthenticationService
   ) {}
 
-  toggleSideMenu() {
-    this.menuCtrl.toggle(); //Add this method to your button click function
+  ngOnDestroy() {
+    if (this.lastPageReachedSub) {
+      this.lastPageReachedSub.unsubscribe();
+    }
   }
 
   ngOnInit() {
-    this.postResult = this.postsService.getPostResult().subscribe((data) => {
-      if (data) {
-        this.getPosts();
-      }
-    });
-
+    // this.postResult = this.postsService.getPostResult().subscribe((data) => {
+    //   if (data) {
+    //     this.getPosts();
+    //   }
+    // });
     this.getUserData();
+    this.items$ = this.postsService.watchItems();
 
-    this.getPosts();
+    this.lastPageReachedSub = this.postsService
+      .watchLastPageReached()
+      .subscribe((reached: boolean) => {
+        if (reached && this.infiniteScroll) {
+          this.loaded = true;
+          this.infiniteScroll.disabled = true;
+        }
+      });
+
+    this.postsService
+      .watchItems()
+      .pipe(
+        filter((flats) => flats !== undefined),
+        take(1)
+      )
+      .subscribe((_items: PostWrapper[]) => {
+        this.loaded = true;
+      });
+
+    this.postsService.find();
+    // this.getPosts();
+  }
+
+  async findNext($event) {
+    setTimeout(async () => {
+      await this.postsService.find();
+      $event.target.complete();
+    }, 500);
   }
 
   getUserData() {
@@ -55,18 +101,18 @@ export class FeedPage implements OnInit {
       });
   }
 
-  getPosts() {
-    this.posts = [];
-    this.postsService.getPosts().subscribe(
-      (posts: any) => {
-        console.log(posts);
-        this.posts = [...posts];
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
-  }
+  // getPosts() {
+  //   this.posts = [];
+  //   this.postsService.getPosts().subscribe(
+  //     (posts: any) => {
+  //       console.log(posts);
+  //       this.posts = [...posts];
+  //     },
+  //     (error: any) => {
+  //       console.log(error);
+  //     }
+  //   );
+  // }
 
   async presentActionSheet(post: Post) {
     let buttons = [];
@@ -165,5 +211,9 @@ export class FeedPage implements OnInit {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  toggleSideMenu() {
+    this.menuCtrl.toggle(); //Add this method to your button click function
   }
 }
