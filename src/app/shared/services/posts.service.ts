@@ -2,25 +2,17 @@ import { Injectable } from "@angular/core";
 import {
   AngularFirestore,
   AngularFirestoreCollection,
-  DocumentData,
   DocumentReference,
-  Query,
   QueryDocumentSnapshot,
   QuerySnapshot,
 } from "@angular/fire/firestore";
 import { AngularFireStorage } from "@angular/fire/storage";
-import { promise } from "protractor";
 import { BehaviorSubject, Observable, Subject, Subscription } from "rxjs";
 import { map, take } from "rxjs/operators";
 import { Post } from "../models/post";
 import { Tag } from "../models/tag";
 import { User } from "../models/user";
 import { LocationService } from "./location.service";
-
-export interface PostWrapper {
-  post: Post;
-  ref: DocumentReference;
-}
 
 @Injectable({
   providedIn: "root",
@@ -33,74 +25,41 @@ export class PostsService {
   ) {}
 
   private itemsSubject: BehaviorSubject<
-    PostWrapper[] | undefined
+    Post[] | undefined
   > = new BehaviorSubject(undefined); // state container for our posts
   private lastPageReached: BehaviorSubject<boolean> = new BehaviorSubject(
     false
   ); // boolean to check if we have fetched all data
   private nextQueryAfter: QueryDocumentSnapshot<Post>; // a reference to the last Firestore document fetched to index our database queries
   private paginationSub: Subscription; // sub to stop observing the changes
-  private findSub: Subscription; // sub to clean up
+  private fetchSub: Subscription; // sub to clean up
 
   public dataQuery: AngularFirestoreCollection;
 
   public postResult: Subject<any> = new Subject<any>();
-  // public lastVisible: any;
+  public editedPostResult: Subject<any> = new Subject<any>();
   public dataSource: any;
-  // getPosts(): Observable<any> {
-  //   return this.firestore
-  //     .collection("posts")
-  //     .valueChanges({ idField: "postId" });
+
+  // destroy() {
+  //   this.unsubscribe();
   // }
 
-  destroy() {
-    this.unsubscribe();
-  }
-
-  private unsubscribe() {
+  public unsubscribe() {
     if (this.paginationSub) {
       this.paginationSub.unsubscribe();
     }
 
-    if (this.findSub) {
-      this.findSub.unsubscribe();
+    if (this.fetchSub) {
+      this.fetchSub.unsubscribe();
     }
   }
 
-  find() {
-    try {
-      const collection: AngularFirestoreCollection<Post> = this.getCollectionQuery();
-
-      this.unsubscribe();
-
-      this.paginationSub = collection.get().subscribe(async (first) => {
-        this.nextQueryAfter = first.docs[
-          first.docs.length - 1
-        ] as QueryDocumentSnapshot<Post>;
-
-        await this.query(collection);
-      });
-    } catch (err) {
-      throw err;
-    }
+  nullifyNextQueryAfter() {
+    // nullify next doc for when refreshing data
+    this.nextQueryAfter = null;
   }
 
-  private getCollectionQuery(): AngularFirestoreCollection<Post> {
-    if (this.nextQueryAfter) {
-      return this.firestore.collection("posts", (ref) =>
-        ref
-          .orderBy("timeStamp", "desc")
-          .startAfter(this.nextQueryAfter)
-          .limit(3)
-      );
-    } else {
-      return this.firestore.collection<Post>("posts", (ref) =>
-        ref.orderBy("timeStamp", "desc").limit(3)
-      );
-    }
-  }
-
-  watchItems(): Observable<PostWrapper[]> {
+  watchItems(): Observable<Post[]> {
     return this.itemsSubject.asObservable();
   }
 
@@ -108,39 +67,57 @@ export class PostsService {
     return this.lastPageReached.asObservable();
   }
 
-  private query(collection: AngularFirestoreCollection<Post>): Promise<void> {
+  private getCollectionQuery(): AngularFirestoreCollection<Post> {
+    // get query based on first fetch or not
+    if (this.nextQueryAfter) {
+      return this.firestore.collection("posts", (ref) =>
+        ref
+          .orderBy("timeStamp", "desc")
+          .startAfter(this.nextQueryAfter)
+          .limit(5)
+      );
+    } else {
+      return this.firestore.collection<Post>("posts", (ref) =>
+        ref.orderBy("timeStamp", "desc").limit(5)
+      );
+    }
+  }
+
+  fetch(reload: boolean) {
+    try {
+      const collection: AngularFirestoreCollection<Post> = this.getCollectionQuery();
+
+      this.unsubscribe();
+
+      this.paginationSub = collection.get().subscribe(async (posts) => {
+        this.nextQueryAfter = posts.docs[
+          posts.docs.length - 1
+        ] as QueryDocumentSnapshot<Post>;
+        await this.transform(posts, reload);
+      });
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  private transform(
+    collection: QuerySnapshot<Post>,
+    reload: boolean
+  ): Promise<void> {
+    console.log("in snapshot function..");
+
     return new Promise<void>((resolve, reject) => {
       try {
-        this.findSub = collection
-          .snapshotChanges()
-          .pipe(
-            map((actions) => {
-              return actions.map((a) => {
-                const id = a.payload.doc.id;
-                const ref = a.payload.doc.ref;
-                const data = a.payload.doc.data();
-                var obj: PostWrapper = {
-                  ref: ref,
-                  post: data,
-                };
-                return obj;
-              });
-            })
-          )
-          .subscribe(async (items: PostWrapper[]) => {
-            await this.addItems(items);
-
-            resolve();
-          });
+        this.addItems(collection, reload);
       } catch (e) {
         reject(e);
       }
     });
   }
 
-  private addItems(items: PostWrapper[]): Promise<void> {
+  private addItems(items: QuerySnapshot<Post>, reload: boolean): Promise<void> {
     return new Promise<void>((resolve) => {
-      if (!items || items.length <= 0) {
+      if (!items || items.docs.length <= 0) {
         this.lastPageReached.next(true);
 
         resolve();
@@ -149,11 +126,17 @@ export class PostsService {
       this.itemsSubject
         .asObservable()
         .pipe(take(1))
-        .subscribe((currentItems: PostWrapper[]) => {
+        .subscribe((currentItems: Post[]) => {
+          let newItems = [];
+          items.forEach((item) => {
+            var p = item.data();
+            p.postId = item.id;
+            newItems.push(p);
+          });
           this.itemsSubject.next(
-            currentItems !== undefined
-              ? [...currentItems, ...items]
-              : [...items]
+            currentItems !== undefined && !reload
+              ? [...currentItems, ...newItems]
+              : [...newItems]
           );
 
           resolve();
@@ -161,54 +144,34 @@ export class PostsService {
     });
   }
 
-  getFeed() {
-    return this.firestore
-      .collection("posts", (ref) => ref.orderBy("timeStamp", "desc").limit(10))
-      .get();
-  }
+  // getFeed() {
+  //   return this.firestore
+  //     .collection("posts", (ref) => ref.orderBy("timeStamp", "desc").limit(10))
+  //     .get();
+  // }
 
-  getPosts(): Observable<any> {
-    return this.firestore
-      .collection("posts", (ref) => ref.orderBy("timeStamp", "desc").limit(10))
-      .valueChanges({ idField: "postId" });
-  }
+  // getPosts(): Observable<any> {
+  //   return this.firestore
+  //     .collection("posts", (ref) => ref.orderBy("timeStamp", "desc").limit(10))
+  //     .valueChanges({ idField: "postId" });
+  // }
 
-  paginate(navigation, lastVisible): Observable<QuerySnapshot<DocumentData>> {
-    switch (navigation) {
-      case "first":
-        this.dataQuery = this.firestore.collection("posts", (ref) =>
-          ref.orderBy("timeStamp", "desc").limit(1)
-        );
-        break;
-      case "next":
-        this.dataQuery = this.firestore.collection("posts", (ref) =>
-          ref.orderBy("timeStamp", "desc").startAfter(lastVisible).limit(1)
-        );
-        break;
-    }
+  // paginate(navigation, lastVisible): Observable<QuerySnapshot<DocumentData>> {
+  //   switch (navigation) {
+  //     case "first":
+  //       this.dataQuery = this.firestore.collection("posts", (ref) =>
+  //         ref.orderBy("timeStamp", "desc").limit(1)
+  //       );
+  //       break;
+  //     case "next":
+  //       this.dataQuery = this.firestore.collection("posts", (ref) =>
+  //         ref.orderBy("timeStamp", "desc").startAfter(lastVisible).limit(1)
+  //       );
+  //       break;
+  //   }
 
-    return this.dataQuery.get();
+  //   return this.dataQuery.get();
 
-    // this.dataSource = this.dataQuery
-    //   .get()
-    //   .then((documentSnapshots: QuerySnapshot<any>) => {
-    //     this.lastVisible =
-    //       documentSnapshots.docs[documentSnapshots.docs.length - 1];
-
-    //     return documentSnapshots.docs.map(
-    //       (element: QueryDocumentSnapshot<any>) => {
-    //         const data = element.data();
-    //         const id = element.id;
-    //         console.log({ id, ...data });
-
-    //         return { id, ...data };
-    //       }
-    //     );
-    //   });
-  }
-
-  // getPost(): Observable<any> {
-  //   return this.firestore.collection("posts").doc()
   // }
 
   getPost(id: string): Observable<any> {
@@ -218,14 +181,6 @@ export class PostsService {
       .collection("posts")
       .doc(id)
       .valueChanges({ idField: "postId" });
-    // snapshot.subscribe((data) => {
-    //   console.log(data.data());
-    // });
-    //   .toPromise();
-    // console.log(snapshot);
-
-    // const data = snapshot.data();
-    // console.log(data);
   }
 
   addPost(
@@ -256,6 +211,7 @@ export class PostsService {
   }
 
   deletePost(post: Post) {
+    // this.unsubscribe();
     return this.firestore.collection("posts").doc(post.postId).delete();
   }
 
@@ -295,5 +251,13 @@ export class PostsService {
 
   triggerPostResult(result: boolean) {
     this.postResult.next(result);
+  }
+
+  triggerEditedPostResult(result: any) {
+    this.editedPostResult.next(result);
+  }
+
+  getEditedPostResult(): Observable<any> {
+    return this.editedPostResult.asObservable();
   }
 }

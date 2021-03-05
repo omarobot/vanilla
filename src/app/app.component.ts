@@ -4,9 +4,10 @@ import { ModalController, Platform } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { PostModalComponent } from "./home/post/post-modal/post-modal.component";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { ModalService } from "./shared/services/modal.service";
 import { AuthenticationService } from "./shared/services/authentication.service";
+import { NavigationEnd, Router } from "@angular/router";
 // import { TranslateService } from "@ngx-translate/core";
 
 @Component({
@@ -16,6 +17,7 @@ import { AuthenticationService } from "./shared/services/authentication.service"
 })
 export class AppComponent implements OnInit {
   display$: Observable<{ open: boolean; id: string }>;
+  routerSub: Subscription;
 
   //**************************************//
   //********** UI layout pages **********//
@@ -76,10 +78,10 @@ export class AppComponent implements OnInit {
     private statusBar: StatusBar,
     public modalController: ModalController,
     public modalService: ModalService,
-    public authService: AuthenticationService // public translate: TranslateService
+    public authService: AuthenticationService, // public translate: TranslateService
+    public router: Router
   ) {
     this.initializeApp();
-    // this.setLanguage();
   }
 
   ngOnInit() {

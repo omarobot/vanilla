@@ -29,17 +29,7 @@ export class PostModalComponent implements OnInit {
   deletedImages: Array<string> = [];
   downloadURL: Observable<string>;
   tags: Array<Tag> = [];
-  defaultTags: Array<Tag> = [
-    // {
-    //   value: "#whiskey",
-    // },
-    // {
-    //   value: "#beach",
-    // },
-    // {
-    //   value: "Rave",
-    // },
-  ];
+  defaultTags: Array<Tag> = [];
 
   constructor(
     private firestore: AngularFirestore,
@@ -178,6 +168,7 @@ export class PostModalComponent implements OnInit {
         console.log("Edited...");
         console.log(data);
         this.router.navigate(["home"]);
+        this.postsService.triggerEditedPostResult(this.id);
         this.modalService.close();
       })
       .catch((error) => {
@@ -217,6 +208,7 @@ export class PostModalComponent implements OnInit {
         });
     }
     this.router.navigate(["home"]);
+
     this.modalService.close();
   }
 }

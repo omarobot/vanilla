@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { Router } from "@angular/router";
+import { NavigationEnd, Router } from "@angular/router";
 import {
   ActionSheetController,
   IonInfiniteScroll,
@@ -10,10 +10,7 @@ import { filter, take } from "rxjs/operators";
 import { Post } from "src/app/shared/models/post";
 import { User } from "src/app/shared/models/user";
 import { AuthenticationService } from "src/app/shared/services/authentication.service";
-import {
-  PostsService,
-  PostWrapper,
-} from "src/app/shared/services/posts.service";
+import { PostsService } from "src/app/shared/services/posts.service";
 import { TimeHelperService } from "src/app/shared/utils/time-helper.service";
 
 @Component({
@@ -22,17 +19,14 @@ import { TimeHelperService } from "src/app/shared/utils/time-helper.service";
   styleUrls: ["./feed.page.scss"],
 })
 export class FeedPage implements OnInit {
-  public posts: Array<Post> = [];
-  public postResult: Subscription; // Used when user adds new post
-  public user: User;
-
+  public posts: Array<Post> = null;
+  private postResultSub: Subscription; // Used when user adds new post
+  private editedPostResultSub: Subscription;
+  private user: User;
   @ViewChild(IonInfiniteScroll, { static: false })
   infiniteScroll: IonInfiniteScroll;
-
-  items$: Observable<PostWrapper[]>;
-
+  items$: Observable<Post[]>;
   loaded = false;
-
   private lastPageReachedSub: Subscription;
 
   constructor(
@@ -48,18 +42,42 @@ export class FeedPage implements OnInit {
     if (this.lastPageReachedSub) {
       this.lastPageReachedSub.unsubscribe();
     }
+    if (this.postResultSub) {
+      this.postResultSub.unsubscribe();
+    }
+    if (this.editedPostResultSub) {
+      this.editedPostResultSub.unsubscribe();
+    }
   }
 
   ngOnInit() {
-    // this.postResult = this.postsService.getPostResult().subscribe((data) => {
-    //   if (data) {
-    //     this.getPosts();
-    //   }
-    // });
-    this.getUserData();
-    this.items$ = this.postsService.watchItems();
+    this.postResultSub = this.postsService.getPostResult().subscribe((data) => {
+      // triggered when user adds post
+      if (data) {
+        this.postsService.nullifyNextQueryAfter();
+        this.infiniteScroll.disabled = false;
+        this.postsService.fetch(true);
+      }
+    });
 
-    this.lastPageReachedSub = this.postsService
+    this.editedPostResultSub = this.postsService // triggered when user edits post
+      .getEditedPostResult()
+      .subscribe((data) => {
+        if (data) {
+          this.updateNewEditedPost(data);
+        }
+      });
+
+    this.getUserData(); // get user data
+
+    this.items$ = this.postsService.watchItems(); // get posts
+
+    this.items$.subscribe((posts) => {
+      // link posts to component variable to modify
+      this.posts = posts;
+    });
+
+    this.lastPageReachedSub = this.postsService // sub for when there are no more posts
       .watchLastPageReached()
       .subscribe((reached: boolean) => {
         if (reached && this.infiniteScroll) {
@@ -74,19 +92,17 @@ export class FeedPage implements OnInit {
         filter((flats) => flats !== undefined),
         take(1)
       )
-      .subscribe((_items: PostWrapper[]) => {
+      .subscribe((_items: Post[]) => {
         this.loaded = true;
       });
 
-    this.postsService.find();
-    // this.getPosts();
+    this.postsService.fetch(false); // fetch first posts
   }
 
-  async findNext($event) {
-    setTimeout(async () => {
-      await this.postsService.find();
-      $event.target.complete();
-    }, 500);
+  async fetchPosts($event) {
+    // used by infinite scroll to fetch more posts
+    await this.postsService.fetch(false);
+    $event.target.complete();
   }
 
   getUserData() {
@@ -101,20 +117,8 @@ export class FeedPage implements OnInit {
       });
   }
 
-  // getPosts() {
-  //   this.posts = [];
-  //   this.postsService.getPosts().subscribe(
-  //     (posts: any) => {
-  //       console.log(posts);
-  //       this.posts = [...posts];
-  //     },
-  //     (error: any) => {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
-
   async presentActionSheet(post: Post) {
+    // present action menu for editing post
     let buttons = [];
     if (post.uid && post.uid === this.user.uid) {
       buttons.push(
@@ -140,6 +144,9 @@ export class FeedPage implements OnInit {
                   .deletePost(post)
                   .then((data) => {
                     console.log(data);
+                    // this.postsService.unsubscribe();
+                    this.removeDeletedItemFromPosts(post);
+                    // this.deleteItem = post.postId;
                   })
                   .catch((data) => {
                     console.log(data);
@@ -179,7 +186,35 @@ export class FeedPage implements OnInit {
     await actionSheet.present();
   }
 
+  updateNewEditedPost(id: string) {
+    // update post after new post has been saved to db
+    this.postsService.getPost(id).subscribe(
+      (post: Post) => {
+        this.posts.forEach((p, i) => {
+          if (p.postId === id) {
+            this.posts[i] = { ...post };
+            return;
+          }
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  removeDeletedItemFromPosts(post: Post) {
+    // remove post from component after it has been deleted from database
+    this.posts.forEach((p, i) => {
+      if (post.postId === p.postId) {
+        this.posts.splice(i, 1);
+        return;
+      }
+    });
+  }
+
   likeEvent(event: { like: boolean; post: Post }) {
+    // update like event
     // event.post.likeCount = 0;
     let newPost: Partial<Post> = {};
     newPost.postId = event.post.postId;
