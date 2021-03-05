@@ -215,26 +215,24 @@ export class FeedPage implements OnInit {
 
   likeEvent(event: { like: boolean; post: Post }) {
     // update like event
-    // event.post.likeCount = 0;
     let newPost: Partial<Post> = {};
     newPost.postId = event.post.postId;
     newPost.likeCount = event.post.likeCount;
-    // newPost.userLikes = [];
 
     if (event.like) {
-      // event.post.likeCount++;
       newPost.likeCount++;
+      event.post.likeCount++;
       if (event.post.userLikes) {
         event.post.userLikes.push(this.user.uid);
         newPost.userLikes = event.post.userLikes;
       }
     } else {
-      // event.post.likeCount--;
       if (event.post.userLikes) {
         newPost.userLikes = event.post.userLikes.filter(
           (x) => x !== this.user.uid
         );
       }
+      event.post.likeCount--;
       newPost.likeCount--;
     }
     this.postsService
@@ -242,10 +240,30 @@ export class FeedPage implements OnInit {
       .then((data) => {
         console.log("Updated like count..");
         console.log(data);
+        this.updateLikeEditedPost(newPost.postId);
       })
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  updateLikeEditedPost(id: string) {
+    // update post after new post has been saved to db
+    this.postsService.getPost(id).subscribe(
+      (post: Post) => {
+        console.log("liked again...");
+
+        this.posts.forEach((p, i) => {
+          if (p.postId === id) {
+            this.posts[i] = { ...post };
+            return;
+          }
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   toggleSideMenu() {

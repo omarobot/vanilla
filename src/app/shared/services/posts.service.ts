@@ -144,36 +144,6 @@ export class PostsService {
     });
   }
 
-  // getFeed() {
-  //   return this.firestore
-  //     .collection("posts", (ref) => ref.orderBy("timeStamp", "desc").limit(10))
-  //     .get();
-  // }
-
-  // getPosts(): Observable<any> {
-  //   return this.firestore
-  //     .collection("posts", (ref) => ref.orderBy("timeStamp", "desc").limit(10))
-  //     .valueChanges({ idField: "postId" });
-  // }
-
-  // paginate(navigation, lastVisible): Observable<QuerySnapshot<DocumentData>> {
-  //   switch (navigation) {
-  //     case "first":
-  //       this.dataQuery = this.firestore.collection("posts", (ref) =>
-  //         ref.orderBy("timeStamp", "desc").limit(1)
-  //       );
-  //       break;
-  //     case "next":
-  //       this.dataQuery = this.firestore.collection("posts", (ref) =>
-  //         ref.orderBy("timeStamp", "desc").startAfter(lastVisible).limit(1)
-  //       );
-  //       break;
-  //   }
-
-  //   return this.dataQuery.get();
-
-  // }
-
   getPost(id: string): Observable<any> {
     console.log("Getting post " + id);
 
