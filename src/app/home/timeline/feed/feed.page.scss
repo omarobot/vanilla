@@ -29,7 +29,7 @@
 
 ion-card {
   min-height: 50px;
-  margin: 0px 0px 15px 0px !important;
+  margin: 0px 0px 10px 0px !important;
   width: 100% !important;
 
   .post-content {
@@ -52,8 +52,10 @@ ion-card {
     }
   }
 
+}
 
-
+main {
+  text-align: center;
 }
 
 // ion-card {

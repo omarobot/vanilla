@@ -63,7 +63,8 @@ export class PostModalComponent implements OnInit {
     this.postsService.getPost(this.id).subscribe(
       (data) => {
         console.log(data);
-        this.oldPost = data;
+        this.oldPost = data.data();
+        this.oldPost.postId = data.id;
         this.inputValue = this.oldPost.content;
         this.imageURLS = [...this.oldPost.images];
         this.tags = [...this.oldPost.tags];
@@ -74,7 +75,7 @@ export class PostModalComponent implements OnInit {
     );
   }
 
-  openFile() {
+  openFile(event: any) {
     document.querySelector("input").click();
   }
 

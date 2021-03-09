@@ -7,8 +7,10 @@ import {
   QuerySnapshot,
 } from "@angular/fire/firestore";
 import { AngularFireStorage } from "@angular/fire/storage";
+import { userInfo } from "os";
 import { BehaviorSubject, Observable, Subject, Subscription } from "rxjs";
 import { map, take } from "rxjs/operators";
+import { Comment } from "../models/comment";
 import { Post } from "../models/post";
 import { Tag } from "../models/tag";
 import { User } from "../models/user";
@@ -104,8 +106,6 @@ export class PostsService {
     collection: QuerySnapshot<Post>,
     reload: boolean
   ): Promise<void> {
-    console.log("in snapshot function..");
-
     return new Promise<void>((resolve, reject) => {
       try {
         this.addItems(collection, reload);
@@ -145,12 +145,7 @@ export class PostsService {
   }
 
   getPost(id: string): Observable<any> {
-    console.log("Getting post " + id);
-
-    return this.firestore
-      .collection("posts")
-      .doc(id)
-      .valueChanges({ idField: "postId" });
+    return this.firestore.collection("posts").doc(id).get();
   }
 
   addPost(
@@ -176,12 +171,11 @@ export class PostsService {
     return this.firestore.collection("posts").add(post);
   }
 
-  editPost(post: Partial<Post>): Promise<any> {
+  editPost(post: Partial<Post>): Promise<void> {
     return this.firestore.collection("posts").doc(post.postId).update(post);
   }
 
-  deletePost(post: Post) {
-    // this.unsubscribe();
+  deletePost(post: Post): Promise<void> {
     return this.firestore.collection("posts").doc(post.postId).delete();
   }
 
@@ -213,6 +207,53 @@ export class PostsService {
       }
     });
     return promise;
+  }
+
+  getComments(id: string): Observable<any> {
+    return this.firestore
+      .collection("posts")
+      .doc(id)
+      .collection("comments")
+      .get();
+  }
+
+  addComment(post: Post, content: string, images?: Array<string>) {
+    const comment: Comment = {
+      postId: post.postId,
+      displayName: post.displayName,
+      userName: post.userName,
+      uid: post.uid,
+      content: content,
+      likeCount: 0,
+      timeStamp: Date.now(),
+      images: [],
+      profileImage: post.profileImage,
+      userLikes: [],
+    };
+
+    return this.firestore
+      .collection("posts")
+      .doc(post.postId)
+      .collection("comments")
+      .add(post);
+  }
+
+  editComment(comment: Comment): Promise<void> {
+    return this.firestore
+      .collection("posts")
+      .doc(comment.postId)
+      .collection("comments")
+      .doc(comment.commentId)
+      .update(comment);
+  }
+
+  deleteComment(comment: Comment): Promise<void> {
+    return this.firestore
+      .collection("posts")
+      .doc(comment.postId)
+      .collection("comments")
+      .doc(comment.commentId)
+      .delete();
   }
 
   getPostResult(): Observable<any> {

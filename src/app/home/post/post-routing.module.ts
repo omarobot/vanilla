@@ -1,14 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
-const routes: Routes = [
-  { path: "", pathMatch: "full" },
-  // {
-  //   path: "post",
-  //   loadChildren: () =>
-  //     import("./add-post/add-post.module").then((m) => m.AddPostPageModule),
-  // },
-];
+const routes: Routes = [{ path: "", pathMatch: "full" }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

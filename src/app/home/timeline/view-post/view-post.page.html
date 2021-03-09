@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-item *ngIf="isLoaded" lines="none">
+      <ion-avatar slot="start">
+        <img *ngIf="post.profileImage" [src]="post?.profileImage">
+        <img *ngIf="!post.profileImage" src="./assets/avatar.svg">
+      </ion-avatar>
+      <ion-label>
+        <h3 class="display-name">{{post?.displayName}}</h3>
+        <p class="location-header">
+          <ion-icon name="location-outline"></ion-icon> {{post?.location}}
+        </p>
+      </ion-label>
+    </ion-item>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ng-container *ngIf="isLoaded; else postLoading;">
+    <ion-card>
+      <ion-slides *ngIf="post.images && post.images.length > 0" pager>
+        <ng-container *ngFor="let url of  post.images">
+          <ion-slide [ngStyle]="{'background' : 'url(' + url + ')'}">
+          </ion-slide>
+        </ng-container>
+      </ion-slides>
+      <ion-card-content>
+        <p class="post-content">
+          {{post?.content}}
+        </p>
+        <p *ngIf="post.tags && post.tags.length > 0">
+          <ion-badge *ngFor="let tag of post.tags" color="secondary">{{tag.value}}</ion-badge>
+        </p>
+        <p class="post-time">{{timeHelper.getRelativeTime(post.timeStamp)}}</p>
+      </ion-card-content>
+
+      <ion-row>
+        <ion-col center class="ion-text-center">
+          <app-like-button [post]="post" [uid]="user.uid" [label]="true" (likeEvent)="likeEvent($event)">
+          </app-like-button>
+        </ion-col>
+        <ion-col center class="ion-text-center">
+          <ion-button fill="clear" size="small" color="dark">
+            <ion-icon slot="start" name="chatbox-ellipses-outline" color="medium"></ion-icon>
+            <ion-label> Comment</ion-label>
+          </ion-button>
+        </ion-col>
+        <ion-col center class="ion-text-center">
+          <ion-button fill="clear" size="small" color="dark">
+            <ion-icon slot="start" name="arrow-redo-outline" color="medium"></ion-icon>
+            <ion-label> Share</ion-label>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ion-card>
+
+  </ng-container>
+  <ng-template #postLoading>
+    <main>
+      <ion-spinner name="bubbles"></ion-spinner>
+    </main>
+  </ng-template>
+</ion-content>

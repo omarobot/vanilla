@@ -9,10 +9,12 @@ export class LikeButtonComponent implements OnInit {
   liked: boolean = false;
   @Input() uid: string;
   @Input() post: Post;
+  @Input() label: boolean;
   @Output() likeEvent: EventEmitter<{
     like: boolean;
     post: Post;
   }> = new EventEmitter<{ like: boolean; post: Post }>();
+  labelString: string = "Likes";
 
   constructor() {}
 

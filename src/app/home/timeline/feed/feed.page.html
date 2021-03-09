@@ -67,11 +67,11 @@
 <ng-container *ngIf="loaded; else feedLoading;">
   <ion-card *ngFor="let post of (items$ | async);">
     <ion-item lines="none">
-      <ion-avatar slot="start">
+      <ion-avatar slot="start" (click)="viewPost(post.postId)">
         <img *ngIf="post.profileImage" [src]="post?.profileImage">
         <img *ngIf="!post.profileImage" src="./assets/avatar.svg">
       </ion-avatar>
-      <ion-label>
+      <ion-label (click)="viewPost(post.postId)">
         <h3 class="display-name">{{post?.displayName}}</h3>
         <p class="location-header">
           <ion-icon name="location-outline"></ion-icon> {{post?.location}}
@@ -88,7 +88,7 @@
       </ng-container>
     </ion-slides>
 
-    <ion-card-content>
+    <ion-card-content (click)="viewPost(post.postId)">
       <p class="post-content">
         {{post?.content}}
       </p>
@@ -110,9 +110,9 @@
       </ion-col>
 
       <ion-col center class="ion-text-right">
-        <ion-button fill="clear" size="small" color="dark">
+        <ion-button fill="clear" size="small" color="dark" (click)="viewPost(post.postId)">
           <ion-icon slot="start" name="arrow-redo-outline" color="medium"></ion-icon>
-          <ion-label> REPLY</ion-label>
+          <ion-label> Reply</ion-label>
         </ion-button>
       </ion-col>
     </ion-row>
@@ -127,6 +127,6 @@
 
 <ng-template #feedLoading>
   <main>
-    Initializing your feed...
+    <ion-spinner name="bubbles"></ion-spinner>
   </main>
 </ng-template>

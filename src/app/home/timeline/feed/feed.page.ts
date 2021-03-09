@@ -22,7 +22,7 @@ export class FeedPage implements OnInit {
   public posts: Array<Post> = null;
   private postResultSub: Subscription; // Used when user adds new post
   private editedPostResultSub: Subscription;
-  private user: User;
+  public user: User;
   @ViewChild(IonInfiniteScroll, { static: false })
   infiniteScroll: IonInfiniteScroll;
   items$: Observable<Post[]>;
@@ -109,7 +109,6 @@ export class FeedPage implements OnInit {
     this.authService
       .getUserData()
       .then((user) => {
-        console.log(user);
         this.user = user;
       })
       .catch((error) => {
@@ -189,10 +188,11 @@ export class FeedPage implements OnInit {
   updateNewEditedPost(id: string) {
     // update post after new post has been saved to db
     this.postsService.getPost(id).subscribe(
-      (post: Post) => {
+      (post: any) => {
         this.posts.forEach((p, i) => {
           if (p.postId === id) {
-            this.posts[i] = { ...post };
+            this.posts[i] = { ...post.data() };
+            this.posts[i].postId = post.id;
             return;
           }
         });
@@ -250,12 +250,13 @@ export class FeedPage implements OnInit {
   updateLikeEditedPost(id: string) {
     // update post after new post has been saved to db
     this.postsService.getPost(id).subscribe(
-      (post: Post) => {
+      (post: any) => {
         console.log("liked again...");
 
         this.posts.forEach((p, i) => {
           if (p.postId === id) {
-            this.posts[i] = { ...post };
+            this.posts[i] = { ...post.data() };
+            this.posts[i].postId = post.id;
             return;
           }
         });
@@ -264,6 +265,10 @@ export class FeedPage implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  viewPost(id: string) {
+    this.router.navigate(["home/timeline/view-post", id]);
   }
 
   toggleSideMenu() {
