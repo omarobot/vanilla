@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { Comment } from "src/app/shared/models/comment";
 import { Post } from "src/app/shared/models/post";
 import { User } from "src/app/shared/models/user";
 import { AuthenticationService } from "src/app/shared/services/authentication.service";
@@ -12,10 +13,14 @@ import { TimeHelperService } from "src/app/shared/utils/time-helper.service";
   styleUrls: ["./view-post.page.scss"],
 })
 export class ViewPostPage implements OnInit {
-  id: string;
-  user: User;
-  post: Post;
-  isLoaded: boolean = false;
+  private id: string;
+  private user: User;
+  public post: Post;
+  public isLoaded: boolean = false;
+  public inputValue: string;
+  public comments: Array<Comment> = [];
+  public uploadedImages: Array<string> = [];
+
   constructor(
     private route: ActivatedRoute,
     private postsService: PostsService,
@@ -48,10 +53,26 @@ export class ViewPostPage implements OnInit {
         this.post = { ...data.data() };
         this.post.postId = data.id;
         this.isLoaded = true;
+        this.getComments();
       },
       (error) => {
         console.log(error);
         this.isLoaded = true;
+      }
+    );
+  }
+
+  getComments() {
+    this.postsService.getComments(this.post.postId).subscribe(
+      (data) => {
+        console.log(data);
+        data.forEach((d) => {
+          console.log(d.data());
+          this.comments.push(d.data());
+        });
+      },
+      (error) => {
+        console.log(error);
       }
     );
   }
@@ -102,5 +123,21 @@ export class ViewPostPage implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  inputChange(input) {
+    this.inputValue = input.detail.value;
+  }
+
+  addComment() {
+    this.postsService
+      .addComment(this.user, this.post, this.inputValue, this.uploadedImages)
+      .then((data: any) => {
+        console.log(data);
+        this.getComments();
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
   }
 }

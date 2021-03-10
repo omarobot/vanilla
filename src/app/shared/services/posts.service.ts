@@ -217,25 +217,27 @@ export class PostsService {
       .get();
   }
 
-  addComment(post: Post, content: string, images?: Array<string>) {
+  addComment(user: User, post: Post, input: string, images?: Array<string>) {
     const comment: Comment = {
       postId: post.postId,
       displayName: post.displayName,
-      userName: post.userName,
+      // userName: post.userName,
       uid: post.uid,
-      content: content,
+      content: input,
       likeCount: 0,
       timeStamp: Date.now(),
-      images: [],
+      images: images,
       profileImage: post.profileImage,
       userLikes: [],
     };
+    console.log("Comment obj");
+    console.log(comment);
 
     return this.firestore
       .collection("posts")
       .doc(post.postId)
       .collection("comments")
-      .add(post);
+      .add(comment);
   }
 
   editComment(comment: Comment): Promise<void> {
