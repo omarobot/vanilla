@@ -65,11 +65,12 @@ export class ViewPostPage implements OnInit {
   getComments() {
     this.postsService.getComments(this.post.postId).subscribe(
       (data) => {
-        console.log(data);
-        data.forEach((d) => {
-          console.log(d.data());
-          this.comments.push(d.data());
+        data.forEach((c) => {
+          let comment: Comment = c.data();
+          comment.commentId = c.id;
+          this.comments.push(comment);
         });
+        console.log(this.comments);
       },
       (error) => {
         console.log(error);
@@ -132,12 +133,39 @@ export class ViewPostPage implements OnInit {
   addComment() {
     this.postsService
       .addComment(this.user, this.post, this.inputValue, this.uploadedImages)
-      .then((data: any) => {
-        console.log(data);
-        this.getComments();
+      .then((comment: any) => {
+        this.inputValue = undefined;
+        this.attachNewComment(comment.id);
       })
       .catch((error: any) => {
         console.log(error);
       });
+  }
+
+  attachNewComment(id: string) {
+    this.postsService.getComment(this.post, id).subscribe(
+      (comment) => {
+        let newComment: Comment = comment.data();
+        newComment.commentId = comment.id;
+        this.comments.push(newComment);
+      },
+      (error) => {}
+    );
+  }
+
+  deleteComment(comment: Comment) {
+    this.postsService.deleteComment(comment).then(
+      () => {
+        this.comments.forEach((c, i) => {
+          if (c.commentId === comment.commentId) {
+            this.comments.splice(i, 1);
+            return;
+          }
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }

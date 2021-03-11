@@ -217,6 +217,15 @@ export class PostsService {
       .get();
   }
 
+  getComment(post: Post, id: string): Observable<any> {
+    return this.firestore
+      .collection("posts")
+      .doc(post.postId)
+      .collection("comments")
+      .doc(id)
+      .get();
+  }
+
   addComment(user: User, post: Post, input: string, images?: Array<string>) {
     const comment: Comment = {
       postId: post.postId,

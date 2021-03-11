@@ -70,24 +70,29 @@
             <img src="{{comment.profileImage}}">
           </ion-avatar>
           <ion-label>
-            <ion-text>
-              <h3>{{comment.displayName}}</h3>
-            </ion-text>
             <div class="comment">
+              <ion-text>
+                <h3>{{comment.displayName}}</h3>
+              </ion-text>
               <p>{{comment.content}}</p>
             </div>
             <ion-row>
               <ion-col size=4 left class="ion-text-left">
                 <p class="post-time">{{timeHelper.getRelativeTime(comment.timeStamp)}}</p>
-
               </ion-col>
-              <ion-col size=8 class="ion-text-right">
-                <!-- <app-like-button [post]="post" [uid]="user.uid" [label]="true" [iconOnly]="true"
-                  (likeEvent)="likeEvent($event)">
-                </app-like-button> -->
+              <ion-col size=8 class="ion-text-right stats">
+                <p class="reply" *ngIf="user.uid === comment.uid" (click)="deleteComment(comment)">Delete</p>
+
+                <p class="reply">Reply</p>
+
+                <p class="likes">{{comment.likeCount}} Likes</p>
+
               </ion-col>
             </ion-row>
           </ion-label>
+          <app-like-button center class="ion-text-center" [post]="post" [uid]="user.uid" [label]="false"
+            [iconOnly]="true" (likeEvent)="likeEvent($event)">
+          </app-like-button>
         </ion-item>
       </ion-list>
     </ion-card>
@@ -112,7 +117,8 @@
       <ion-col size=2>
         <ion-button class="msg-button" fill="clear" color="primary" size="large" [disabled]="!inputValue"
           (click)="addComment()">
-          <ion-icon slot="start" name="paper-plane"></ion-icon>
+          <ion-icon size="large" slot="start" name="chevron-forward-circle-outline"></ion-icon>
+          <!-- <ion-icon slot="start" name="paper-plane"></ion-icon> -->
         </ion-button>
       </ion-col>
     </ion-row>
