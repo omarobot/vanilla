@@ -59,7 +59,6 @@ ion-card {
     }
 
     ion-item {
-        --inner-padding-end: 0px;
         --inner-border-width: 0px;
         padding: 10px 5px 5px 5px;
         display: flex;
@@ -70,8 +69,7 @@ ion-card {
         }
 
         app-like-button {
-            --inner-padding-end: 0px;
-            // margin-bottom: 1px;
+            // --inner-padding-end: 0px;
         }
 
         .stats {
@@ -86,6 +84,7 @@ ion-card {
 
             .likes {
                 font-size: 12px;
+                margin-right: 5px;
             }
         }
     }
@@ -113,6 +112,12 @@ main {
     // color: #fff;
     h3 {
         font-weight: 500;
+    }
+}
+
+.sub-comment {
+    ion-item {
+        padding-left: 0px;
     }
 }
 

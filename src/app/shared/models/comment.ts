@@ -10,4 +10,7 @@ export class Comment {
   images?: Array<string>;
   timeStamp: number;
   userLikes?: Array<string>;
+  parentCommentId?: string;
+  subCommentCount: number;
+  subComments?: Array<Comment> | undefined;
 }

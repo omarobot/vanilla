@@ -183,6 +183,10 @@ export class PostsService {
     return this.firestore.collection("posts").doc(post.postId).update(post);
   }
 
+  updatePostCommentCount(post: Partial<Post>) {
+    return this.firestore.collection("posts").doc(post.postId).update(post);
+  }
+
   deleteImages(urls: Array<string>): Promise<any> {
     var promise = new Promise((resolve, reject) => {
       let error: boolean = false;
@@ -229,18 +233,17 @@ export class PostsService {
   addComment(user: User, post: Post, input: string, images?: Array<string>) {
     const comment: Comment = {
       postId: post.postId,
-      displayName: post.displayName,
+      displayName: user.displayName,
       // userName: post.userName,
-      uid: post.uid,
+      uid: user.uid,
       content: input,
       likeCount: 0,
       timeStamp: Date.now(),
       images: images,
-      profileImage: post.profileImage,
+      profileImage: user.photoURL,
       userLikes: [],
+      subCommentCount: 0,
     };
-    console.log("Comment obj");
-    console.log(comment);
 
     return this.firestore
       .collection("posts")
@@ -264,6 +267,89 @@ export class PostsService {
       .doc(comment.postId)
       .collection("comments")
       .doc(comment.commentId)
+      .delete();
+  }
+
+  updateCommentCommentCount(
+    postId: string,
+    commentId: string,
+    comment: Partial<Comment>
+  ) {
+    console.log(postId);
+    console.log(commentId);
+    console.log(comment);
+
+    return this.firestore
+      .collection("posts")
+      .doc(postId)
+      .collection("comments")
+      .doc(commentId)
+      .update(comment);
+  }
+
+  getSubComments(comment: Comment): Observable<any> {
+    return this.firestore
+      .collection("posts")
+      .doc(comment.postId)
+      .collection("comments")
+      .doc(comment.commentId)
+      .collection("subcomments")
+      .get();
+  }
+
+  getSubComment(
+    postId: string,
+    commentId: string,
+    subComId: string
+  ): Observable<any> {
+    return this.firestore
+      .collection("posts")
+      .doc(postId)
+      .collection("comments")
+      .doc(commentId)
+      .collection("subcomments")
+      .doc(subComId)
+      .get();
+  }
+
+  addSubComment(
+    user: User,
+    comment: Comment,
+    input: string,
+    images?: Array<string>
+  ) {
+    const subCom: Comment = {
+      postId: comment.postId,
+      parentCommentId: comment.commentId,
+      displayName: user.displayName,
+      // userName: post.userName,
+      uid: user.uid,
+      content: input,
+      likeCount: 0,
+      timeStamp: Date.now(),
+      images: images,
+      profileImage: user.photoURL,
+      userLikes: [],
+      subCommentCount: 0,
+    };
+
+    return this.firestore
+      .collection("posts")
+      .doc(comment.postId)
+      .collection("comments")
+      .doc(comment.commentId)
+      .collection("subcomments")
+      .add(subCom);
+  }
+
+  deleteSubComment(subComment: Comment): Promise<void> {
+    return this.firestore
+      .collection("posts")
+      .doc(subComment.postId)
+      .collection("comments")
+      .doc(subComment.parentCommentId)
+      .collection("subcomments")
+      .doc(subComment.commentId)
       .delete();
   }
 

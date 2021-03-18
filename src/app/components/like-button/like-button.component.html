@@ -1,6 +1,12 @@
-<ion-button fill="clear" size="small" color="dark" (click)="click()">
+<ion-button *ngIf="button" fill="clear" size="small" color="dark" (click)="click()">
     <ion-icon *ngIf="liked" slot="start" name="heart" color="secondary"></ion-icon>
     <ion-icon *ngIf="!liked" slot="start" name="heart-outline" color="medium"></ion-icon>
     <ion-label *ngIf="!iconOnly"> {{ post.likeCount }}</ion-label>
     <ion-label *ngIf="label && !iconOnly">&nbsp;{{labelString}}</ion-label>
 </ion-button>
+<div *ngIf="!button" (click)="click()">
+    <ion-icon *ngIf="liked" slot="start" name="heart" color="secondary"></ion-icon>
+    <ion-icon *ngIf="!liked" slot="start" name="heart-outline" color="medium"></ion-icon>
+    <ion-label *ngIf="!iconOnly"> {{ comment.likeCount }}</ion-label>
+    <ion-label *ngIf="label && !iconOnly">&nbsp;{{labelString}}</ion-label>
+</div>
