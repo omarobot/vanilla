@@ -76,7 +76,7 @@ export class ViewPostPage implements OnInit {
           this.comments.push(comment);
         });
         console.log(this.comments);
-        this.getSubComments();
+        // this.getSubComments();
       },
       (error) => {
         console.log(error);
@@ -84,22 +84,33 @@ export class ViewPostPage implements OnInit {
     );
   }
 
-  getSubComments() {
-    this.comments.forEach((comment) => {
-      if (comment.subCommentCount && comment.subCommentCount > 0) {
-        this.postsService.getSubComments(comment).subscribe(
-          (data) => {
-            console.log(data);
-            data.forEach((element) => {
-              let c: Comment = element.data();
-              c.commentId = element.id;
-              comment.subComments.push(c);
-            });
-          },
-          (error) => {}
-        );
-      }
-    });
+  getSubComments(comment: Comment) {
+    this.postsService.getSubComments(comment).subscribe(
+      (data) => {
+        console.log(data);
+        data.forEach((element) => {
+          let c: Comment = element.data();
+          c.commentId = element.id;
+          comment.subComments.push(c);
+        });
+      },
+      (error) => {}
+    );
+    // this.comments.forEach((comment) => {
+    //   if (comment.subCommentCount && comment.subCommentCount > 0) {
+    //     this.postsService.getSubComments(comment).subscribe(
+    //       (data) => {
+    //         console.log(data);
+    //         data.forEach((element) => {
+    //           let c: Comment = element.data();
+    //           c.commentId = element.id;
+    //           comment.subComments.push(c);
+    //         });
+    //       },
+    //       (error) => {}
+    //     );
+    //   }
+    // });
   }
 
   async addCommentFocus() {
@@ -207,6 +218,44 @@ export class ViewPostPage implements OnInit {
     );
   }
 
+  updateCommentCount(action: string) {
+    let comment: Partial<Comment> = {};
+    if (action == "add") {
+      comment.subCommentCount = this.commentRef.subCommentCount + 1;
+    } else {
+      comment.subCommentCount--;
+    }
+
+    this.postsService
+      .editComment(this.post.postId, this.commentRef.commentId, comment)
+      .then(() => {
+        this.updateComment();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  updateComment() {
+    this.postsService
+      .getComment(this.post, this.commentRef.commentId)
+      .subscribe(
+        (post: any) => {
+          let newCom: Comment = post.data();
+          newCom.commentId = post.id;
+          this.comments.forEach((comment, i) => {
+            if (comment.commentId === newCom.commentId) {
+              comment.subCommentCount = newCom.subCommentCount;
+            }
+          });
+          this.getSubComments(newCom);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
+
   addSubComment() {
     this.postsService
       .addSubComment(
@@ -228,7 +277,8 @@ export class ViewPostPage implements OnInit {
             partial
           )
           .then((data) => {
-            this.attachNewSubComment(comment.id);
+            this.updateCommentCount("add");
+            // this.attachNewSubComment(comment.id);
           })
           .catch((error) => {
             console.log(error);

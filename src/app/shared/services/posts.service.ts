@@ -243,6 +243,7 @@ export class PostsService {
       profileImage: user.photoURL,
       userLikes: [],
       subCommentCount: 0,
+      subComments: [],
     };
 
     return this.firestore
@@ -252,12 +253,16 @@ export class PostsService {
       .add(comment);
   }
 
-  editComment(comment: Comment): Promise<void> {
+  editComment(
+    postId: string,
+    commentId: string,
+    comment: Partial<Comment>
+  ): Promise<void> {
     return this.firestore
       .collection("posts")
-      .doc(comment.postId)
+      .doc(postId)
       .collection("comments")
-      .doc(comment.commentId)
+      .doc(commentId)
       .update(comment);
   }
 

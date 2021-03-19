@@ -66,7 +66,7 @@
     </ion-card>
     <ion-card *ngIf="comments.length > 0">
       <ion-list>
-        <div *ngFor="let comment of comments; let i = index">
+        <div *ngFor="let comment of comments; let i = index" class="comment-container">
           <ion-item>
             <ion-avatar slot="start">
               <img src="{{comment.profileImage}}">
@@ -95,43 +95,51 @@
               </ion-row>
             </ion-label>
           </ion-item>
-          <div *ngIf="comment?.subComments && comment?.subComments.length > 0" class="sub-comment">
-            <ion-row *ngFor="let sub of comment.subComments">
-              <ion-col size="11" offset="1">
-                <ion-item>
-                  <ion-avatar slot="start">
-                    <img src="{{sub.profileImage}}">
-                  </ion-avatar>
-                  <ion-label>
-                    <div class="comment">
-                      <ion-text>
-                        <h3>{{sub.displayName}}</h3>
-                      </ion-text>
-                      <p>{{sub.content}}</p>
-                    </div>
-                    <ion-row>
-                      <ion-col size=4 left class="ion-text-left">
-                        <p class="post-time">{{timeHelper.getRelativeTime(sub.timeStamp)}}</p>
-                      </ion-col>
-                      <ion-col size=8 class="ion-text-right stats">
-                        <p class="reply" *ngIf="user.uid === comment.uid" (click)="deleteComment(sub)">Delete</p>
-                        <p class="reply">Reply</p>
-                        <p class="likes">{{sub.likeCount}} Likes</p>
-                        <p>
-                          <app-like-button center class="ion-text-center" [comment]="sub" [uid]="user.uid"
-                            [label]="false" [iconOnly]="true" (likeEvent)="likeSubCommentEvent($event)">
-                          </app-like-button>
-                        </p>
-                      </ion-col>
-                    </ion-row>
-                  </ion-label>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
+          <div *ngIf="comment?.subCommentCount && comment?.subCommentCount > 0" class="sub-comment">
+            <ng-container>
+              <ion-row>
+                <ion-col size="10" offset="2" class="show-sub-comments-label">
+                  <small
+                    (click)="getSubComments(comment)">{{ "Show " + comment.subCommentCount + " " + (comment.subCommentCount == 1 ? "reply" : "replies")}}
+                  </small>
+                </ion-col>
+              </ion-row>
+            </ng-container>
+            <ng-container *ngIf="comment?.subComments && comment?.subComments.length > 0">
+              <ion-row *ngFor="let sub of comment.subComments">
+                <ion-col size="11" offset="1">
+                  <ion-item>
+                    <ion-avatar slot="start" style="width: 25px; height: 25px;">
+                      <img src="{{sub.profileImage}}">
+                    </ion-avatar>
+                    <ion-label>
+                      <div class="comment">
+                        <ion-text>
+                          <h3>{{sub.displayName}}</h3>
+                        </ion-text>
+                        <p>{{sub.content}}</p>
+                      </div>
+                      <ion-row>
+                        <ion-col size=4 left class="ion-text-left">
+                          <p class="post-time">{{timeHelper.getRelativeTime(sub.timeStamp)}}</p>
+                        </ion-col>
+                        <ion-col size=8 class="ion-text-right stats">
+                          <p class="reply" *ngIf="user.uid === comment.uid" (click)="deleteComment(sub)">Delete</p>
+                          <p class="reply" (click)="addSubCommentFocus(comment)">Reply</p>
+                          <p class="likes">{{sub.likeCount}} Likes</p>
+                          <p>
+                            <app-like-button center class="ion-text-center" [comment]="sub" [uid]="user.uid"
+                              [label]="false" [iconOnly]="true" (likeEvent)="likeSubCommentEvent($event)">
+                            </app-like-button>
+                          </p>
+                        </ion-col>
+                      </ion-row>
+                    </ion-label>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ng-container>
           </div>
-
-
         </div>
 
       </ion-list>

@@ -99,6 +99,10 @@ main {
     text-align: center;
 }
 
+.comment-container {
+    border-bottom: 1px solid var(--ion-color-light-shade);
+}
+
 .comment-user {
     padding-left: 5px;
 }
@@ -119,6 +123,13 @@ main {
     ion-item {
         padding-left: 0px;
     }
+
+    small {
+        padding-left: 8px;
+        font-size: 90%;
+    }
+
+    .show-sub-comments-label {}
 }
 
 ::ng-deep {
